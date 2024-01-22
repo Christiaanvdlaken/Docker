@@ -1,0 +1,146 @@
+version: "3.3"
+
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1111
+      - PGID=4321
+      - TZ=Etc/UTC
+      - UMASK=002
+    volumes:
+      - /path/to/data/radarr:/config
+      - /media/chris/Elements/movies:/movies #Aanpassen
+      - /media/chris/Elements/downloads:/downloads #Aanpassen
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+  
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=2222
+      - PGID=4321
+      - TZ=Etc/UTC
+      - UMASK=002
+    volumes:
+      - /path/to/data/sonarr:/config
+      - /media/chris/Elements/tvseries:/tvseries #Aanpassen
+      - /media/chris/Elements/downloads:/downloads #Aanpassen
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:4.6.0
+    container_name: qbittorrent
+    environment:
+      - PUID=3333
+      - PGID=4321
+      - TZ=Etc/UTC
+      - UMASK=002
+      - WEBUI_PORT=8080
+    volumes:
+      - /path/to/data/qbit:/config
+      - /media/chris/Elements/downloads:/downloads
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=4444
+      - PGID=4321
+      - UMASK=002
+      - TZ=Etc/UTC
+    volumes:
+      - /path/to/data/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=5555
+      - PGID=4321
+      - UMASK=002
+      - TZ=Etc/UTC
+    volumes:
+      - /path/to/data/bazarr:/config
+      - /media/chris/Elements/movies:/movies #Aanpassen
+      - /media/chris/Elements/tvseries:/tvseries #Aanpassen
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+  
+  openbooks:
+    container_name: OpenBooks
+    image: evanbuss/openbooks:latest
+    restart: unless-stopped
+    ports:
+      - 7676:80
+    volumes:
+      - /media/chris/Elements/books:/books
+    command: --persist --name Carnita1234
+
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - /path/to/data//homarr/configs:/app/data/configs
+      - /path/to/data//homarr/icons:/app/public/icons
+      - /path/to/data//homarr/data:/data
+    ports:
+      - 7575:7575
+
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v1.0.0 # 
+    container_name: mealie
+    ports:
+        - "9925:9000" # 
+    deploy:
+      resources:
+        limits:
+          memory: 1000M # 
+    volumes:
+      - mealie-data:/app/data/
+    environment:
+    # Set Backend ENV Variables Here
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Anchorage
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=1
+      - BASE_URL=192.168.2.13
+      - DEFAULT_GROUP=Home
+      - DEFAULT_EMAIL=christiaanvdlaken@gmail.com
+    restart: always
+
+portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+    volumes:
+        - data:/data
+        - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+volumes:
+  mealie-data:
+    driver: local
