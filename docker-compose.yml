@@ -102,9 +102,9 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - /path/to/data//homarr/configs:/app/data/configs
-      - /path/to/data//homarr/icons:/app/public/icons
-      - /path/to/data//homarr/data:/data
+      - /path/to/data/homarr/configs:/app/data/configs
+      - /path/to/data/homarr/icons:/app/public/icons
+      - /path/to/data/homarr/data:/data
     ports:
       - 7575:7575
 
@@ -137,7 +137,7 @@ portainer:
     ports:
       - 9443:9443
     volumes:
-        - data:/data
+        - /path/to/data/portainer:/data
         - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
