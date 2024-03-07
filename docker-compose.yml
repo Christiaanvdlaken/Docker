@@ -26,9 +26,9 @@ services:
       - TZ=Etc/UTC
       - UMASK=002
     volumes:
-      - /path/to/data/sonarr:/config
-      - /media/chris/Elements/tvseries:/tvseries #Aanpassen
-      - /media/chris/Elements/downloads:/downloads #Aanpassen
+      - $CONFIG_FOLDER/sonarr:/config
+      - $SERIES_FOLDER:/tvseries #Aanpassen
+      - $DOWNLOAD_FOLDER:/downloads #Aanpassen
     ports:
       - 8989:8989
     restart: unless-stopped
