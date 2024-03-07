@@ -76,7 +76,7 @@ services:
       - UMASK=002
       - TZ=Etc/UTC
     volumes:
-      - /path/to/data/bazarr:/config
+      - $CONFIG_FOLDER/bazarr:/config
       - /media/chris/Elements/movies:/movies #Aanpassen
       - /media/chris/Elements/tvseries:/tvseries #Aanpassen
     ports:
