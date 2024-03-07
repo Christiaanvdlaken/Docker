@@ -36,6 +36,8 @@ services:
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:4.6.0
     container_name: qbittorrent
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
     environment:
       - PUID=3333
       - PGID=4321
@@ -64,6 +66,7 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
+  
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
@@ -90,11 +93,11 @@ services:
       - /media/chris/Elements/books:/books
     command: --persist --name Carnita1234
 
-  # watchtower:
-  #   container_name: watchtower
-  #   image: containrrr/watchtower
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   
   homarr:
     container_name: homarr
