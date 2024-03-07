@@ -135,15 +135,18 @@ services:
       - DEFAULT_EMAIL=christiaanvdlaken@gmail.com
     restart: always
 
-  portainer:
-      container_name: portainer
-      image: portainer/portainer-ce:latest
-      ports:
-        - 9443:9443
-      volumes:
-          - /path/to/data/portainer:/data
-          - /var/run/docker.sock:/var/run/docker.sock
-      restart: unless-stopped
+  ##
+  # Los deployen zodat ik vanuit portainer de compose file via GIT kan uploaden als een stack
+  ##
+  # portainer:
+  #     container_name: portainer
+  #     image: portainer/portainer-ce:latest
+  #     ports:
+  #       - 9443:9443
+  #     volumes:
+  #         - /path/to/data/portainer:/data
+  #         - /var/run/docker.sock:/var/run/docker.sock
+  #     restart: unless-stopped
 
   flaresolverr:
       # DockerHub mirror flaresolverr/flaresolverr:latest
