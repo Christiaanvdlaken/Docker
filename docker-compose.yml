@@ -90,11 +90,11 @@ services:
       - /media/chris/Elements/books:/books
     command: --persist --name Carnita1234
 
-  watchtower:
-    container_name: watchtower
-    image: containrrr/watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  # watchtower:
+  #   container_name: watchtower
+  #   image: containrrr/watchtower
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
   
   homarr:
     container_name: homarr
@@ -102,9 +102,9 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - /path/to/data//homarr/configs:/app/data/configs
-      - /path/to/data//homarr/icons:/app/public/icons
-      - /path/to/data//homarr/data:/data
+      - /path/to/data/homarr/configs:/app/data/configs
+      - /path/to/data/homarr/icons:/app/public/icons
+      - /path/to/data/homarr/data:/data
     ports:
       - 7575:7575
 
@@ -132,14 +132,28 @@ services:
       - DEFAULT_EMAIL=christiaanvdlaken@gmail.com
     restart: always
 
-portainer:
-    image: portainer/portainer-ce:latest
-    ports:
-      - 9443:9443
-    volumes:
-        - data:/data
-        - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
+  portainer:
+      container_name: portainer
+      image: portainer/portainer-ce:latest
+      ports:
+        - 9443:9443
+      volumes:
+          - /path/to/data/portainer:/data
+          - /var/run/docker.sock:/var/run/docker.sock
+      restart: unless-stopped
+
+  flaresolverr:
+      # DockerHub mirror flaresolverr/flaresolverr:latest
+      image: ghcr.io/flaresolverr/flaresolverr:latest
+      container_name: flaresolverr
+      environment:
+        - LOG_LEVEL=${LOG_LEVEL:-info}
+        - LOG_HTML=${LOG_HTML:-false}
+        - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+        - TZ=Europe/London
+      ports:
+        - "${PORT:-8191}:8191"
+      restart: unless-stopped     
 
 volumes:
   mealie-data:
