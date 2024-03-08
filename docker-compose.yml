@@ -10,9 +10,9 @@ services:
       - TZ=Etc/UTC
       - UMASK=002
     volumes:
-      - /path/to/data/radarr:/config
-      - /media/chris/Elements/movies:/movies #Aanpassen
-      - /media/chris/Elements/downloads:/downloads #Aanpassen
+      - $CONFIG_FOLDER/radarr:/config
+      - $MOVIE_FOLDER:/movies #Aanpassen
+      - $DOWNLOAD_FOLDER:/downloads #Aanpassen
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -45,8 +45,8 @@ services:
       - UMASK=002
       - WEBUI_PORT=8080
     volumes:
-      - /path/to/data/qbit:/config
-      - /media/chris/Elements/downloads:/downloads
+      - $CONFIG_FOLDER/qbit:/config
+      - $DOWNLOAD_FOLDER:/downloads
     ports:
       - 8080:8080
       - 6881:6881
@@ -62,7 +62,7 @@ services:
       - UMASK=002
       - TZ=Etc/UTC
     volumes:
-      - /path/to/data/prowlarr:/config
+      - $CONFIG_FOLDER/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -77,8 +77,8 @@ services:
       - TZ=Etc/UTC
     volumes:
       - $CONFIG_FOLDER/bazarr:/config
-      - /media/chris/Elements/movies:/movies #Aanpassen
-      - /media/chris/Elements/tvseries:/tvseries #Aanpassen
+      - $MOVIE_FOLDER:/movies #Aanpassen
+      - $SERIES_FOLDER:/tvseries #Aanpassen
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -90,7 +90,7 @@ services:
     ports:
       - 7676:80
     volumes:
-      - /media/chris/Elements/books:/books
+      - $BOOK_FOLDER:/books
     command: --persist --name Carnita1234
 
   watchtower:
@@ -105,9 +105,9 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
-      - /path/to/data/homarr/configs:/app/data/configs
-      - /path/to/data/homarr/icons:/app/public/icons
-      - /path/to/data/homarr/data:/data
+      - $CONFIG_FOLDER/homarr/configs:/app/data/configs
+      - $CONFIG_FOLDER/homarr/icons:/app/public/icons
+      - $CONFIG_FOLDER/homarr/data:/data
     ports:
       - 7575:7575
 
@@ -130,9 +130,9 @@ services:
       - TZ=America/Anchorage
       - MAX_WORKERS=1
       - WEB_CONCURRENCY=1
-      - BASE_URL=192.168.2.13
+      - BASE_URL=$BASE_URL
       - DEFAULT_GROUP=Home
-      - DEFAULT_EMAIL=christiaanvdlaken@gmail.com
+      - DEFAULT_EMAIL=$DEFAULT_EMAIL
     restart: always
 
   ##
@@ -144,7 +144,7 @@ services:
   #     ports:
   #       - 9443:9443
   #     volumes:
-  #         - /path/to/data/portainer:/data
+  #         - $CONFIG_FOLDER/portainer:/data
   #         - /var/run/docker.sock:/var/run/docker.sock
   #     restart: unless-stopped
 
