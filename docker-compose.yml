@@ -79,6 +79,7 @@ services:
     user: 1000:1000
     environment:
       - TZ=Etc/UTC
+      - AUTOBRR__HOST=192.168.2.13
     volumes:
       - $CONFIG_FOLDER/autobrr/config:/config
     ports:
