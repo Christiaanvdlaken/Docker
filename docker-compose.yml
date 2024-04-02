@@ -78,12 +78,12 @@ services:
     #    max-size: ${DOCKERLOGGING_MAXSIZE}
     user: 1000:1000
     environment:
-      - TZ=${TZ}
+      - TZ=Etc/UTC
     volumes:
-      - ${BASE_DOCKER_DATA_PATH}/autobrr/config:/config
+      - $CONFIG_FOLDER/autobrr/config:/config
     ports:
       - 7474:7474
-      
+
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
