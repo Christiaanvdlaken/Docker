@@ -79,8 +79,8 @@ services:
     user: 1000:1000
     environment:
       - TZ=Etc/UTC
-      - AUTOBRR__HOST=0.0.0.0
-      - AUTOBRR__PORT=7474
+      #- AUTOBRR__HOST=0.0.0.0
+      #- AUTOBRR__PORT=7474
     volumes:
       - $CONFIG_FOLDER/autobrr/config:/config
     ports:
