@@ -70,7 +70,6 @@ services:
   autobrr:
     container_name: autobrr
     image: ghcr.io/autobrr/autobrr:latest
-    restart: unless-stopped
     #logging:
     #  driver: json-file
     #  options:
@@ -78,9 +77,6 @@ services:
     #    max-size: ${DOCKERLOGGING_MAXSIZE}
     user: 8888:8888
     environment:
-      - PUID=8888
-      - PGID=4321
-      - UMASK=002
       - TZ=Etc/UTC
       - AUTOBRR__DATABASE_TYPE=postgres
       #- AUTOBRR__HOST=0.0.0.0
@@ -89,6 +85,7 @@ services:
       - $CONFIG_FOLDER/autobrr/config:/config
     ports:
       - 7474:7474
+    restart: unless-stopped
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
