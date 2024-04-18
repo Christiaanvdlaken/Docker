@@ -102,7 +102,15 @@ services:
     ports:
       - 6767:6767
     restart: unless-stopped
-  
+
+  mkvtoolnix:
+    image: jlesage/mkvtoolnix
+    ports:
+      - 5800:5800
+    volumes:
+      - $CONFIG_FOLDER/mkvtoolnix:/config:rw
+      - $MOVIE_FOLDER:/storage:rw
+
   openbooks:
     container_name: OpenBooks
     image: evanbuss/openbooks:latest
