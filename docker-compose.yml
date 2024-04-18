@@ -72,9 +72,9 @@ services:
     image: ghcr.io/autobrr/autobrr:latest
     logging:
      driver: json-file
-     options:
-       max-file: 3
-       max-size: 50
+     #options:
+      # max-file: 3
+      # max-size: 50
     user: 8888:8888
     environment:
       - TZ=Etc/UTC
