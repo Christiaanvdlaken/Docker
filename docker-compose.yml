@@ -105,6 +105,7 @@ services:
 
   mkvtoolnix:
     image: jlesage/mkvtoolnix
+    container_name: mkvtoolnix
     ports:
       - 5800:5800
     volumes:
