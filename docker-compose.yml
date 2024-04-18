@@ -70,11 +70,11 @@ services:
   autobrr:
     container_name: autobrr
     image: ghcr.io/autobrr/autobrr:latest
-    #logging:
-    #  driver: json-file
-    #  options:
-    #    max-file: ${DOCKERLOGGING_MAXFILE}
-    #    max-size: ${DOCKERLOGGING_MAXSIZE}
+    logging:
+     driver: json-file
+     options:
+       max-file: ${DOCKERLOGGING_MAXFILE}
+       max-size: ${DOCKERLOGGING_MAXSIZE}
     user: 8888:8888
     environment:
       - TZ=Etc/UTC
