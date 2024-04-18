@@ -73,8 +73,8 @@ services:
     logging:
      driver: json-file
      options:
-       max-file: ${DOCKERLOGGING_MAXFILE}
-       max-size: ${DOCKERLOGGING_MAXSIZE}
+       max-file: 3
+       max-size: 50
     user: 8888:8888
     environment:
       - TZ=Etc/UTC
