@@ -11,8 +11,9 @@ services:
       - UMASK=002
     volumes:
       - $CONFIG_FOLDER/radarr:/config
-      - $MOVIE_FOLDER:/movies #Aanpassen
-      - $DOWNLOAD_FOLDER:/downloads #Aanpassen
+      - $MOVIE_FOLDER:/movies 
+      - $DOCU_FOLDER:/documentaries 
+      - $DOWNLOAD_FOLDER:/downloads 
     ports:
       - 7878:7878
     restart: unless-stopped
