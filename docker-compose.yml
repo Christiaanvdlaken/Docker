@@ -54,6 +54,21 @@ services:
       - 6881:6881/udp
     restart: unless-stopped
 
+    sabnzbd:
+      image: lscr.io/linuxserver/sabnzbd:latest
+      container_name: sabnzbd
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - TZ=Etc/UTC
+      volumes:
+        - $CONFIG_FOLDER/sabnzb:/config
+        - $USENET_DOWNLOADS:/downloads 
+        - $USENET_INCOMPLETE_DOWNLOADS:/incomplete-downloads 
+      ports:
+        - 8282:8282
+      restart: unless-stopped 
+
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -161,9 +176,9 @@ services:
       - TZ=America/Anchorage
       - MAX_WORKERS=1
       - WEB_CONCURRENCY=1
-      - BASE_URL=192.168.2.13
+      - BASE_URL=$BASE_URL
       - DEFAULT_GROUP=Home
-      - DEFAULT_EMAIL=christiaanvdlaken@gmail.com
+      - DEFAULT_EMAIL=$DEFAULT_EMAIL
     restart: always
 
   ##
