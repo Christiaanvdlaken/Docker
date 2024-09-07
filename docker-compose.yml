@@ -47,7 +47,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - $CONFIG_FOLDER/qbit:/config
-      - $DOWNLOAD_FOLDER_TORRENT:/data/torrent:rw
+      - $DOWNLOAD_FOLDER_TORRENT:/data/torrents:rw
     ports:
       - 8080:8080
       - 6881:6881
