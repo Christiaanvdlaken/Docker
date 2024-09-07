@@ -13,7 +13,7 @@ services:
       - $CONFIG_FOLDER/radarr:/config
       - $MOVIE_FOLDER:/movies 
       - $DOCU_FOLDER:/documentaries 
-      - $DOWNLOAD_FOLDER:/downloads 
+      - $DATA_FOLDER:/data 
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -29,7 +29,7 @@ services:
     volumes:
       - $CONFIG_FOLDER/sonarr:/config
       - $SERIES_FOLDER:/tvseries #Aanpassen
-      - $DOWNLOAD_FOLDER:/downloads #Aanpassen
+      - $DATA_FOLDER:/data #Aanpassen
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -47,7 +47,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - $CONFIG_FOLDER/qbit:/config
-      - $DOWNLOAD_FOLDER:/downloads
+      - $DOWNLOAD_FOLDER_TORRENT:/data/torrent:rw
     ports:
       - 8080:8080
       - 6881:6881
@@ -63,8 +63,8 @@ services:
         - TZ=Etc/UTC
       volumes:
         - $CONFIG_FOLDER/sabnzb:/config
-        - $USENET_DOWNLOADS:/downloads 
-        - $USENET_INCOMPLETE_DOWNLOADS:/incomplete-downloads 
+        - $DOWNLOAD_FOLDER_USENET:/data/usenet:rw
+
       ports:
         - 8282:8080
       restart: unless-stopped 
@@ -113,8 +113,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - $CONFIG_FOLDER/bazarr:/config
-      - $MOVIE_FOLDER:/movies #Aanpassen
-      - $SERIES_FOLDER:/tvseries #Aanpassen
+      - $MEDIA_FOLDER:/data/media
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -135,7 +134,7 @@ services:
     ports:
       - 7676:80
     volumes:
-      - $BOOK_FOLDER:/books
+      - $BOOK_FOLDER:/data/media/books
     command: --persist --name Carnita1234
 
   watchtower:
