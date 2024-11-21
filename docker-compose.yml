@@ -143,6 +143,8 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+    - WATCHTOWER_CLEANUP=true
   
   homarr:
     container_name: homarr
