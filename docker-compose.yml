@@ -158,6 +158,16 @@ services:
     ports:
       - 7575:7575
 
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - 3000:3000
+    volumes:
+      - $CONFIG_FOLDER/homepage:/config 
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped
+
   mealie:
     image: ghcr.io/mealie-recipes/mealie:v1.0.0 # 
     container_name: mealie
