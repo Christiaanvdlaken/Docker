@@ -161,6 +161,9 @@ services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
+    environment:
+        - PUID=7777
+        - PGID=4321
     ports:
       - 3000:3000
     volumes:
