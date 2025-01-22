@@ -82,26 +82,6 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
-  
-  autobrr:
-    container_name: autobrr
-    image: ghcr.io/autobrr/autobrr:latest
-    logging:
-     driver: json-file
-     #options:
-      # max-file: 3
-      # max-size: 50
-    user: 8888:8888
-    environment:
-      - TZ=Etc/UTC
-      #- AUTOBRR__DATABASE_TYPE=sqlite
-      - AUTOBRR__HOST=0.0.0.0
-      #- AUTOBRR__PORT=7474
-    volumes:
-      - $CONFIG_FOLDER/autobrr/config:/config
-    ports:
-      - 7474:7474
-    restart: unless-stopped
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
