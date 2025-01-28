@@ -226,13 +226,15 @@ services:
       PAPERLESS_DBHOST: db
 
   wastebin:
+      image: 'quxfoo/wastebin:latest' 
+      container_name: wastebin
+      restart: unless-stopped
       environment:
         - WASTEBIN_DATABASE_PATH=/data/state.db
       ports:
         - "9191:8088"
       volumes:
-        - $CONFIG_FOLDER/paperless:/data
-      image: 'quxfoo/wastebin:latest'   
+        - $CONFIG_FOLDER/wastebin:/data  
 
 volumes:
   pgdata:
