@@ -192,12 +192,14 @@ services:
   broker:
     image: docker.io/library/redis:7
     restart: unless-stopped
+    container_name: paperless_broker
     volumes:
       - redisdata:/data
 
   db:
     image: docker.io/library/postgres:16
     restart: unless-stopped
+    container_name: paperless_db
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
@@ -222,6 +224,15 @@ services:
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
+
+  wastebin:
+      environment:
+        - WASTEBIN_DATABASE_PATH=/data/state.db
+      ports:
+        - "9191:8088"
+      volumes:
+        - $CONFIG_FOLDER/paperless:/data
+      image: 'quxfoo/wastebin:latest'   
 
 volumes:
   pgdata:
