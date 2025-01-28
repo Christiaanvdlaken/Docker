@@ -228,9 +228,9 @@ services:
 
 
 volumes:
-paperless_data:
-paperless_media:
-pgdata:
-redisdata:
+  paperless_data:
+  paperless_media:
+  pgdata:
+  redisdata:
   mealie-data:
     driver: local
