@@ -213,7 +213,7 @@ services:
       - db
       - broker
     ports:
-      - "8000:8000"
+      - "8686:8000"
     volumes:
       - $CONFIG_FOLDER/paperless:/usr/src/paperless/data
       - $MEDIA_FOLDER/paperless:/usr/src/paperless/media
