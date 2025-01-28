@@ -215,8 +215,8 @@ services:
       ports:
         - "8000:8000"
       volumes:
-        - paperless_data:/usr/src/paperless/data
-        - paperless_media:/usr/src/paperless/media
+        - data:/usr/src/paperless/data
+        - media:/usr/src/paperless/media
         - ./export:/usr/src/paperless/export
         - ./consume:/usr/src/paperless/consume
       env_file: docker-compose.env
@@ -225,8 +225,8 @@ services:
         PAPERLESS_DBHOST: db
 
 volumes:
-  paperless_data:
-  paperless_media:
+  data:
+  media:
   pgdata:
   redisdata:
   mealie-data:
