@@ -189,43 +189,40 @@ services:
         - "8191:8191"
       restart: unless-stopped
   
-  paperless_broker:
-    image: docker.io/library/redis:7
-    restart: unless-stopped
-    container_name: paperless-broker
-    volumes:
-      - redisdata:/data
+  broker:
+      image: docker.io/library/redis:7
+      restart: unless-stopped
+      volumes:
+        - redisdata:/data
 
-  paperless_db:
-    image: docker.io/library/postgres:16
-    restart: unless-stopped
-    container_name: paperless-db
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: paperless
-      POSTGRES_USER: paperless
-      POSTGRES_PASSWORD: paperless
+    db:
+      image: docker.io/library/postgres:16
+      restart: unless-stopped
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: paperless
+        POSTGRES_USER: paperless
+        POSTGRES_PASSWORD: paperless
 
-  paperless_webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:latest
-    container_name: paperless
-    restart: unless-stopped
-    depends_on:
-      - db
-      - broker
-    ports:
-      - "8686:8000"
-    volumes:
-      - paperless_data:/usr/src/paperless/data
-      - paperless_media:/usr/src/paperless/media
-      - ./export:/usr/src/paperless/export
-      - ./consume:/usr/src/paperless/consume
-    env_file: docker-compose.env
-    environment:
-      PAPERLESS_REDIS: redis://paperless_broker:6379
-      PAPERLESS_DBHOST: paperless_db
-
+    webserver:
+      image: ghcr.io/paperless-ngx/paperless-ngx:latest
+      restart: unless-stopped
+      container_name: paperless-ngx
+      depends_on:
+        - db
+        - broker
+      ports:
+        - "8000:8000"
+      volumes:
+        - paperless_data:/usr/src/paperless/data
+        - paperless_media:/usr/src/paperless/media
+        - ./export:/usr/src/paperless/export
+        - ./consume:/usr/src/paperless/consume
+      env_file: docker-compose.env
+      environment:
+        PAPERLESS_REDIS: redis://broker:6379
+        PAPERLESS_DBHOST: db
 
 volumes:
   paperless_data:
