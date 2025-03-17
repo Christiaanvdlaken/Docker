@@ -130,9 +130,9 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     environment:
-        - HOMEPAGE_ALLOWED_HOSTS: 192.168.1.13:3000
-        - PUID=7777
-        - PGID=4321
+        HOMEPAGE_ALLOWED_HOSTS: 192.168.1.13:3000
+        PUID=7777
+        PGID=4321
     ports:
       - 3000:3000
     volumes:
