@@ -107,16 +107,6 @@ services:
       - $CONFIG_FOLDER/mkvtoolnix:/config:rw
       - $MOVIE_FOLDER:/storage:rw
 
-  openbooks:
-    container_name: OpenBooks
-    image: evanbuss/openbooks:latest
-    restart: unless-stopped
-    ports:
-      - 7676:80
-    volumes:
-      - $BOOK_FOLDER:/data/media/books
-    command: --persist --name Carnita1234
-
   calibre-web-automated-book-downloader:
       image: ghcr.io/calibrain/calibre-web-automated-book-downloader:latest
       container_name: calibre-web-automated-book-downloader
