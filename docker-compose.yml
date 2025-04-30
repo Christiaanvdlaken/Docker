@@ -117,22 +117,25 @@ services:
       - $BOOK_FOLDER:/data/media/books
     command: --persist --name Carnita1234
 
-  # calibre:
-  #   image: lscr.io/linuxserver/calibre:latest
-  #   container_name: calibre
-  #   security_opt:
-  #     - seccomp:unconfined #optional
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Etc
-  #   volumes:
-  #     - $CONFIG_FOLDER/calibre-server/config:/calibre-server-config
-  #   ports:
-  #     - 8881:8080
-  #     - 8882:8181
-  #     - 8883:8081
-  #   restart: unless-stopped
+  calibre-web-automated-book-downloader:
+      image: ghcr.io/calibrain/calibre-web-automated-book-downloader:latest
+      container_name: calibre-web-automated-book-downloader
+      environment:
+        FLASK_PORT: 8084
+        LOG_LEVEL: info
+        BOOK_LANGUAGE: en
+        USE_BOOK_TITLE: true
+        TZ: CET
+        APP_ENV: prod
+        UID: 1000
+        GID: 100
+      ports:
+        - 8084:8084
+      restart: unless-stopped
+      volumes:
+      # This is where the books will be downloaded to, usually it would be 
+      # the same as whatever you gave in "calibre-web-automated"
+        - /home/chris/Downloads/cwabookingest:/cwa-book-ingest
 
   calibre-web-automated:
     image: crocodilestick/calibre-web-automated:latest
