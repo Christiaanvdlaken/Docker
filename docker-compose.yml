@@ -124,7 +124,7 @@ services:
       - PUID=1000
       - PGID=1000
       # Edit to match your current timezone https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-      - TZ=CEST
+      - TZ=CET
     volumes:
       # CW users migrating should stop their existing CW instance, make a copy of the config folder, and bind that here to carry over all of their user settings ect.
       - $CONFIG_FOLDER/calibre:/calibre-config 
@@ -134,7 +134,7 @@ services:
       - $BOOK_FOLDER:/calibre-library 
     ports:
       # Change the first number to change the port you want to access the Web UI, not the second
-      - 8083:8083 
+      - 8888:8083
     restart: unless-stopped
 
   watchtower:
@@ -245,17 +245,6 @@ services:
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
-
-  wastebin:
-      image: 'quxfoo/wastebin:latest' 
-      container_name: wastebin
-      restart: unless-stopped
-      environment:
-        - WASTEBIN_DATABASE_PATH=/data/state.db
-      ports:
-        - "8088:8088"
-      volumes:
-        - $CONFIG_FOLDER/wastebin:/data  
 
 volumes:
   pgdata:
