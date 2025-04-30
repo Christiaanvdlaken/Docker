@@ -137,7 +137,7 @@ services:
       - TZ=CET
     volumes:
       # CW users migrating should stop their existing CW instance, make a copy of the config folder, and bind that here to carry over all of their user settings ect.
-      - $CONFIG_FOLDER/calibre:/calibre-config 
+      - $CONFIG_FOLDER/calibre:/config 
       # This is an ingest dir, NOT a library one. Anything added here will be automatically added to your library according to the settings you have configured in CWA Settings page. All files placed here are REMOVED AFTER PROCESSING
       - /home/chris/Downloads/cwabookingest:/cwa-book-ingest
       # If you don't have an existing library, CWA will automatically create one at the bind provided here
