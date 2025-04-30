@@ -117,6 +117,26 @@ services:
       - $BOOK_FOLDER:/data/media/books
     command: --persist --name Carnita1234
 
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:latest
+    container_name: calibre-web-automated
+    environment:
+      - PUID=1000
+      - PGID=1000
+      # Edit to match your current timezone https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+      - TZ=CEST
+    volumes:
+      # CW users migrating should stop their existing CW instance, make a copy of the config folder, and bind that here to carry over all of their user settings ect.
+      - $CONFIG_FOLDER/calibre:/calibre-config 
+      # This is an ingest dir, NOT a library one. Anything added here will be automatically added to your library according to the settings you have configured in CWA Settings page. All files placed here are REMOVED AFTER PROCESSING
+      - /home/chris/Downloads/cwabookingest:/cwa-book-ingest
+      # If you don't have an existing library, CWA will automatically create one at the bind provided here
+      - $BOOK_FOLDER:/calibre-library 
+    ports:
+      # Change the first number to change the port you want to access the Web UI, not the second
+      - 8083:8083 
+    restart: unless-stopped
+
   watchtower:
     container_name: watchtower
     image: containrrr/watchtower
