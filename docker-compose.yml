@@ -171,13 +171,13 @@ services:
     restart: unless-stopped
 
   NginxProxyManager:
-      image: 'docker.io/jc21/nginx-proxy-manager:latest'
-      restart: unless-stopped
-      ports:
+    image: 'docker.io/jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
         - '80:80'
         - '81:81'
         - '443:443'
-      volumes:
+    volumes:
         - ./data:/data
         - ./letsencrypt:/etc/letsencrypt
 
