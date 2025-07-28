@@ -113,12 +113,13 @@ services:
       environment:
         FLASK_PORT: 8084
         LOG_LEVEL: info
-        BOOK_LANGUAGE: en
+        BOOK_LANGUAGE: en, nl
         USE_BOOK_TITLE: true
         TZ: CET
         APP_ENV: prod
         UID: 1000
         GID: 100
+        USE_CF_BYPASS: false
       ports:
         - 8084:8084
       restart: unless-stopped
