@@ -119,7 +119,6 @@ services:
         APP_ENV: prod
         UID: 1000
         GID: 100
-        AA_ADDITIONAL_URLS: https://annas-archive.li, https://annas-archive.se
         USE_CF_BYPASS: false
       ports:
         - 8084:8084
