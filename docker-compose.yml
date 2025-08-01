@@ -98,15 +98,6 @@ services:
       - 6767:6767
     restart: unless-stopped
 
-  mkvtoolnix:
-    image: jlesage/mkvtoolnix
-    container_name: mkvtoolnix
-    ports:
-      - 5800:5800
-    volumes:
-      - $CONFIG_FOLDER/mkvtoolnix:/config:rw
-      - $MOVIE_FOLDER:/storage:rw
-
   calibre-web-automated-book-downloader:
       image: ghcr.io/calibrain/calibre-web-automated-book-downloader:latest
       container_name: calibre-web-automated-book-downloader
@@ -136,6 +127,7 @@ services:
       - PGID=1000
       # Edit to match your current timezone https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
       - TZ=CET
+      - HARDCOVER_TOKEN=$HARDCOVER_TOKEN
     volumes:
       # CW users migrating should stop their existing CW instance, make a copy of the config folder, and bind that here to carry over all of their user settings ect.
       - $CONFIG_FOLDER/calibre:/config 
