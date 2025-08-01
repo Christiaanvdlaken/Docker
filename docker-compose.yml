@@ -127,7 +127,6 @@ services:
       - PGID=1000
       # Edit to match your current timezone https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
       - TZ=CET
-      - HARDCOVER_TOKEN=Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJIYXJkY292ZXIiLCJ2ZXJzaW9uIjoiOCIsImp0aSI6IjQ1MzhiOGYyLWVhYzktNGEyOS1iOTVjLWYwNDQ2YzRjZDkyZCIsImFwcGxpY2F0aW9uSWQiOjIsInN1YiI6IjM4MTI2IiwiYXVkIjoiMSIsImlkIjoiMzgxMjYiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzU0MDY3NDg0LCJleHAiOjE3ODU2MDM0ODQsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1yb2xlIjoidXNlciIsIlgtaGFzdXJhLXVzZXItaWQiOiIzODEyNiJ9LCJ1c2VyIjp7ImlkIjozODEyNn19.Q_LGons7JhUQzSkSz5Q7crbNRuNe7oiNQzOayZGeRhM
     volumes:
       # CW users migrating should stop their existing CW instance, make a copy of the config folder, and bind that here to carry over all of their user settings ect.
       - $CONFIG_FOLDER/calibre:/config 
