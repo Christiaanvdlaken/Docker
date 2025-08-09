@@ -1,0 +1,268 @@
+version: "3.7"
+
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1111
+      - PGID=4321
+      - TZ=Etc/UTC
+      - UMASK=002
+    volumes:
+      - $CONFIG_FOLDER/radarr:/config
+      - $MOVIE_FOLDER:/movies 
+      - $DOCU_FOLDER:/documentaries 
+      - $DATA_FOLDER:/data 
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+  
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=2222
+      - PGID=4321
+      - TZ=Etc/UTC
+      - UMASK=002
+    volumes:
+      - $CONFIG_FOLDER/sonarr:/config
+      - $SERIES_FOLDER:/tvseries #Aanpassen
+      - $DATA_FOLDER:/data #Aanpassen
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:4.6.0
+    container_name: qbittorrent
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    environment:
+      - PUID=3333
+      - PGID=4321
+      - TZ=Etc/UTC
+      - UMASK=002
+      - WEBUI_PORT=8080
+    volumes:
+      - $CONFIG_FOLDER/qbit:/config
+      - $DOWNLOAD_FOLDER_TORRENT:/data/torrents:rw
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+  sabnzbd:
+      image: lscr.io/linuxserver/sabnzbd:latest
+      container_name: sabnzbd
+      environment:
+        - PUID=6666
+        - PGID=4321
+        - TZ=Etc/UTC
+      volumes:
+        - $CONFIG_FOLDER/sabnzb:/config
+        - $DOWNLOAD_FOLDER_USENET:/data/usenet:rw
+
+      ports:
+        - 8282:8080
+      restart: unless-stopped 
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=4444
+      - PGID=4321
+      - UMASK=002
+      - TZ=Etc/UTC
+    volumes:
+      - $CONFIG_FOLDER/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=5555
+      - PGID=4321
+      - UMASK=002
+      - TZ=Etc/UTC
+    volumes:
+      - $CONFIG_FOLDER/bazarr:/config
+      - $MEDIA_FOLDER:/data/media
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+  calibre-web-automated-book-downloader:
+      image: ghcr.io/calibrain/calibre-web-automated-book-downloader:latest
+      container_name: calibre-web-automated-book-downloader
+      environment:
+        FLASK_PORT: 8084
+        LOG_LEVEL: info
+        BOOK_LANGUAGE: nl
+        USE_BOOK_TITLE: true
+        TZ: CET
+        APP_ENV: prod
+        UID: 1000
+        GID: 100
+        # USE_CF_BYPASS: false
+      ports:
+        - 8084:8084
+      restart: unless-stopped
+      volumes:
+      # This is where the books will be downloaded to, usually it would be 
+      # the same as whatever you gave in "calibre-web-automated"
+        - /home/chris/Downloads/cwabookingest:/cwa-book-ingest
+
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:latest
+    container_name: calibre-web-automated
+    environment:
+      - PUID=1000
+      - PGID=1000
+      # Edit to match your current timezone https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+      - TZ=CET
+      - HARDCOVER_TOKEN=${HARDCOVER_TOKEN}
+    volumes:
+      # CW users migrating should stop their existing CW instance, make a copy of the config folder, and bind that here to carry over all of their user settings ect.
+      - $CONFIG_FOLDER/calibre:/config 
+      # This is an ingest dir, NOT a library one. Anything added here will be automatically added to your library according to the settings you have configured in CWA Settings page. All files placed here are REMOVED AFTER PROCESSING
+      - /home/chris/Downloads/cwabookingest:/cwa-book-ingest
+      # If you don't have an existing library, CWA will automatically create one at the bind provided here
+      - $BOOK_FOLDER:/calibre-library 
+    ports:
+      # Change the first number to change the port you want to access the Web UI, not the second
+      - 8083:8083
+    restart: unless-stopped
+
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+    - WATCHTOWER_CLEANUP=true
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+        HOMEPAGE_ALLOWED_HOSTS: 192.168.2.13:3000
+        PUID: 7777
+        PGID: 4321
+    ports:
+      - 3000:3000
+    volumes:
+      - $CONFIG_FOLDER/homepage:/config 
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped
+
+  NginxProxyManager:
+    image: 'docker.io/jc21/nginx-proxy-manager:latest'
+    container_name: NginxProxyManager
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v1.0.0 # 
+    container_name: mealie
+    ports:
+        - "9925:9000" # 
+    deploy:
+      resources:
+        limits:
+          memory: 1000M # 
+    volumes:
+      - mealie-data:/app/data/
+    environment:
+    # Set Backend ENV Variables Here
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Anchorage
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=1
+      - BASE_URL=$BASE_URL
+      - DEFAULT_GROUP=Home
+      - DEFAULT_EMAIL=$DEFAULT_EMAIL
+    restart: always
+
+  ##
+  # Los deployen zodat ik vanuit portainer de compose file via GIT kan uploaden als een stack
+  ##
+  # portainer:
+  #     container_name: portainer
+  #     image: portainer/portainer-ce:latest
+  #     ports:
+  #       - 9443:9443
+  #     volumes:
+  #         - $CONFIG_FOLDER/portainer:/data
+  #         - /var/run/docker.sock:/var/run/docker.sock
+  #     restart: unless-stopped
+
+  flaresolverr:
+      # DockerHub mirror flaresolverr/flaresolverr:latest
+      image: ghcr.io/flaresolverr/flaresolverr:latest
+      container_name: flaresolverr
+      environment:
+        - LOG_LEVEL=${LOG_LEVEL:-info}
+        - LOG_HTML=${LOG_HTML:-false}
+        - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+        - TZ=Europe/London
+      ports:
+        - "8191:8191"
+      restart: unless-stopped
+
+  broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    container_name: paperless_broker
+    volumes:
+      - redisdata:/data
+
+  db:
+    image: docker.io/library/postgres:16
+    restart: unless-stopped
+    container_name: paperless_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: paperless
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    ports:
+      - "8686:8000"
+    volumes:
+      - $CONFIG_FOLDER/paperless:/usr/src/paperless/data
+      - $MEDIA_FOLDER/paperless:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+
+volumes:
+  pgdata:
+  redisdata:
+  mealie-data:
+    driver: local
