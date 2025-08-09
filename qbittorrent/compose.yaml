@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:4.6.0
+    container_name: qbittorrent
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+      - WEBUI_PORT=${WEBUI_PORT}
+    volumes:
+      - ${CONFIG_FOLDER}/qbit:/config
+      - ${DOWNLOAD_FOLDER_TORRENT}:/data/torrents:rw
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped

@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_FOLDER}/bazarr:/config
+      - ${MEDIA_FOLDER}:/data/media
+    ports:
+      - 6767:6767
+    restart: unless-stopped

@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v1.0.0
+    container_name: mealie
+    ports:
+      - "9925:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    volumes:
+      - mealie-data:/app/data/
+    environment:
+      - ALLOW_SIGNUP=${ALLOW_SIGNUP}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MAX_WORKERS=${MAX_WORKERS}
+      - WEB_CONCURRENCY=${WEB_CONCURRENCY}
+      - BASE_URL=${BASE_URL}
+      - DEFAULT_GROUP=${DEFAULT_GROUP}
+      - DEFAULT_EMAIL=${DEFAULT_EMAIL}
+    restart: always
+
+volumes:
+  mealie-data:
+    driver: local

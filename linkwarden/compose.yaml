@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  linkwarden:
+    image: ghcr.io/linkwarden/linkwarden:latest
+    container_name: linkwarden
+    ports:
+      - 3001:3000
+    volumes:
+      - ${LINKWARDEN_DATA_FOLDER}:/data
+    environment:
+      - TZ=${TZ}
+    restart: unless-stopped

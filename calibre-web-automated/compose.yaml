@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:latest
+    container_name: calibre-web-automated
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_FOLDER}/calibre:/config
+      - ${BOOK_INGEST_FOLDER}:/cwa-book-ingest
+      - ${BOOK_FOLDER}:/calibre-library
+    ports:
+      - 8888:8083
+    restart: unless-stopped

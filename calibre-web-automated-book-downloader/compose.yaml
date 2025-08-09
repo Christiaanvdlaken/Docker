@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  calibre-web-automated-book-downloader:
+    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:latest
+    container_name: calibre-web-automated-book-downloader
+    environment:
+      FLASK_PORT: ${FLASK_PORT}
+      LOG_LEVEL: ${LOG_LEVEL}
+      BOOK_LANGUAGE: ${BOOK_LANGUAGE}
+      USE_BOOK_TITLE: ${USE_BOOK_TITLE}
+      TZ: ${TZ}
+      APP_ENV: ${APP_ENV}
+      UID: ${UID}
+      GID: ${GID}
+    ports:
+      - 8084:8084
+    restart: unless-stopped
+    volumes:
+      - ${BOOK_INGEST_FOLDER}:/cwa-book-ingest

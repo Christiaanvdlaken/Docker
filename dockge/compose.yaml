@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  dockge:
+    image: louislam/dockge:latest
+    container_name: dockge
+    ports:
+      - 5001:5001
+    volumes:
+      - ${DOCKGE_DATA_FOLDER}:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=${TZ}
+    restart: unless-stopped
