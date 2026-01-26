@@ -1,0 +1,12 @@
+services:
+  swiparr:
+    image: ghcr.io/m3sserstudi0s/swiparr:latest
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    environment:
+      - JELLYFIN_URL=http://your-jellyfin-internal-ip:8096
+      # - JELLYFIN_PUBLIC_URL=https://jellyfin.yourdomain.com
+    volumes:
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/swiparr-data:/app/data
+    ports:
+      - 4321:4321
