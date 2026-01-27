@@ -3,9 +3,10 @@ services:
     container_name: ${CONTAINER_NAME}
     image: bellamy/wallos:latest
     ports:
-      - "8282:80"
-    env_file:
-      - wallos.env
+      - ${PORT}:80
+    env_file: 
+      - ../.env
+      - .env
     environment:
       - TZ=${TZ}
     volumes:

@@ -12,6 +12,9 @@ services:
           memory: 1000M
     volumes:
       - mealie-data:/app/data/
+    env_file: 
+      - ../.env
+      - .env
     environment:
       - ALLOW_SIGNUP=${ALLOW_SIGNUP}
       - PUID=${PUID}

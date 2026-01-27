@@ -17,10 +17,13 @@ services:
         condition: service_healthy
     ports:
       - "${BOOKLORE_PORT}:${BOOKLORE_PORT}"
+    env_file: 
+      - ../.env
+      - .env
     volumes:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}/data:/app/data
       - ${DATA_FOLDER}/books:/books
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/bookdrop:/bookdrop
+      - ${DATA_FOLDER}/ebooksselfmark-book-downloader:/bookdrop
     healthcheck:
       test: wget -q -O - http://localhost:${BOOKLORE_PORT}/api/v1/healthcheck
       interval: 60s
@@ -32,6 +35,9 @@ services:
   mariadb:
     image: lscr.io/linuxserver/mariadb:11.4.5
     container_name: mariadb
+    env_file: 
+      - ../.env
+      - .env
     environment:
       - PUID=${DB_USER_ID}
       - PGID=${DB_GROUP_ID}

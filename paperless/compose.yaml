@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
     container_name: paperless_db
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -29,8 +29,8 @@ services:
     ports:
       - "8686:8000"
     volumes:
-      - ${CONFIG_FOLDER}/paperless:/usr/src/paperless/data
-      - ${MEDIA_FOLDER}/paperless:/usr/src/paperless/media
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/:/usr/src/paperless/data
+      - ${NAS_FOLDER}/paperless:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
     environment:

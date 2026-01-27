@@ -1,10 +1,11 @@
 services:
   qui:
     image: ghcr.io/autobrr/qui:latest
-    container_name: qui
+    container_name: ${CONTAINER_NAME}
     restart: unless-stopped
+    env_file: .env    
     ports:
       - "7476:7476"
     volumes:
-      - ${CONFIG_FOLDER}/qui:/config
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
     #environment:

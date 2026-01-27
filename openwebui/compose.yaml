@@ -6,5 +6,8 @@ services:
       - "3113:8080"
     volumes:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/app/backend/data
+    env_file: 
+      - ../.env
+      - .env
 volumes:
   open-webui:

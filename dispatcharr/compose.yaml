@@ -4,9 +4,12 @@ services:
     #   context: .
     #   dockerfile: Dockerfile
     image: ghcr.io/dispatcharr/dispatcharr:latest
-    container_name: dispatcharr
+    container_name: ${CONTAINER_NAME}
     ports:
-      - 9191:9191
+      - ${PORT}:9191
+    env_file: 
+      - ../.env
+      - .env
     volumes:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}/dispatcharr_data:/data
     environment:

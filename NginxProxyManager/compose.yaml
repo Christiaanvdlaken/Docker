@@ -3,12 +3,15 @@ version: "3.7"
 services:
   NginxProxyManager:
     image: 'docker.io/jc21/nginx-proxy-manager:latest'
-    container_name: NginxProxyManager
+    container_name: ${CONTAINER_NAME}
     restart: unless-stopped
+    env_file: 
+      - ../.env
+      - .env
     ports:
       - '80:80'
       - '81:81'
       - '443:443'
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/data:/data
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/letsencrypt:/etc/letsencrypt

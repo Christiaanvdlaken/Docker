@@ -3,14 +3,17 @@ version: "3.7"
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
-    container_name: homepage
+    container_name: ${CONTAINER_NAME}
+    env_file: 
+      - ../.env
+      - .env
     environment:
       HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS}
       PUID: ${PUID}
       PGID: ${PGID}
     ports:
-      - 3000:3000
+      - ${PORT}:3000
     volumes:
-      - ${CONFIG_FOLDER}/homepage:/config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mount de Docker socket zodat de container andere containers kan aansturen
     restart: unless-stopped

@@ -3,14 +3,15 @@ version: "3.7"
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
+    container_name: ${CONTAINER_NAME}
+    env_file: ../.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - UMASK=${UMASK}
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_FOLDER}/prowlarr:/config
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
     ports:
       - 9696:9696
     restart: unless-stopped

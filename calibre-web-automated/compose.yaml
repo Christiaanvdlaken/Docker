@@ -1,17 +1,18 @@
-version: "3.7"
-
 services:
   calibre-web-automated:
     image: crocodilestick/calibre-web-automated:latest
-    container_name: calibre-web-automated
+    container_name: ${CONTAINER_NAME}
+    env_file: 
+      - ../.env
+      - .env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_FOLDER}/calibre:/config
-      - ${BOOK_INGEST_FOLDER}:/cwa-book-ingest
-      - ${BOOK_FOLDER}:/calibre-library
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
+      - ${DATA_FOLDER}/selfmark-book-downloader:/cwa-book-ingest
+      - ${DATA_FOLDER}/media/books:/calibre-library
     ports:
-      - 8888:8083
+      - ${PORT}:8083
     restart: unless-stopped
