@@ -1,0 +1,13 @@
+services:
+  slskd:
+    image: slskd/slskd
+    container_name: ${CONTAINER_NAME}
+    ports:
+      - "${PORT_HTTP}:5030"
+      - "${PORT_HTTPS}:5031"
+      - "50300:50300"
+    environment:
+      - SLSKD_REMOTE_CONFIGURATION=true
+    volumes:
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/app
+    restart: always
