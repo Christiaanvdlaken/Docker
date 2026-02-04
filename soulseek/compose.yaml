@@ -10,4 +10,4 @@ services:
       - SLSKD_REMOTE_CONFIGURATION=true
     volumes:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/app
-    restart: always
+    restart: unless-stopped
