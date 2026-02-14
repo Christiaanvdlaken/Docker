@@ -2,6 +2,7 @@ services:
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
+    hostname: gluetun
     cap_add:
       - NET_ADMIN
       - NET_RAW
@@ -53,18 +54,4 @@ services:
       - TZ=${TZ}
     volumes:
       - ${CONFIG_FOLDER}/prowlarr:/config
-    restart: unless-stopped
-
-  sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    container_name: sonarr
-    network_mode: "service:gluetun"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - UMASK=${UMASK}
-    volumes:
-      - ${CONFIG_FOLDER}/sonarr:/config
-      - ${DATA_FOLDER}:/data
     restart: unless-stopped
