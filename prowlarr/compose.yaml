@@ -1,15 +1,13 @@
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
-    container_name: ${CONTAINER_NAME}
-    env_file: ../.env
+    container_name: prowlarr
+    network_mode: "service:gluetun"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - UMASK=${UMASK}
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
-    ports:
-      - "${PORT}:9696"
+      - ${CONFIG_FOLDER}/prowlarr:/config
     restart: unless-stopped
