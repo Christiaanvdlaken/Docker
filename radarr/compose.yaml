@@ -1,10 +1,7 @@
 services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
-    container_name: ${CONTAINER_NAME}
-    env_file: 
-      - ../.env
-      - .env
+    container_name: radarr
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -14,5 +11,5 @@ services:
       - ${CONFIG_FOLDER}/radarr:/config
       - ${DATA_FOLDER}:/data
     ports:
-      - 7878:7878
+      - ${RADARR_PORT}:7878
     restart: unless-stopped
