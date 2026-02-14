@@ -8,6 +8,8 @@ services:
       - PGID=${PGID}
       - UMASK=${UMASK}
       - TZ=${TZ}
+    ports:
+      - 9696:9696
     volumes:
       - ${CONFIG_FOLDER}/prowlarr:/config
     restart: unless-stopped
