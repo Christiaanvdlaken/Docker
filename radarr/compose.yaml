@@ -11,7 +11,7 @@ services:
       - TZ=${TZ}
       - UMASK=${UMASK}
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
+      - ${CONFIG_FOLDER}/radarr:/config
       - ${DATA_FOLDER}:/data
     ports:
       - 7878:7878
