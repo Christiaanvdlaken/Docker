@@ -55,3 +55,16 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/prowlarr:/config
     restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+    volumes:
+      - ${CONFIG_FOLDER}/sonarr:/config
+      - ${DATA_FOLDER}:/data
+    restart: unless-stopped
