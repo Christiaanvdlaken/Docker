@@ -4,6 +4,7 @@ services:
     container_name: gluetun
     cap_add:
       - NET_ADMIN
+      - NET_RAW
     devices:
       - /dev/net/tun:/dev/net/tun
     ports:
@@ -19,3 +20,4 @@ services:
       - WIREGUARD_PRIVATE_KEY=WFUvjnjrGxdpHzeQRNwBvARoe//AUomaqBWjdR6p9hk=
       - WIREGUARD_ADDRESSES=10.67.82.91/32
       - SERVER_CITIES=Amsterdam
+      - DNS_UPDATE=yes
