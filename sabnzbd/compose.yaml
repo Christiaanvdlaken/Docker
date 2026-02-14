@@ -1,15 +1,14 @@
 services:
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
-    container_name: ${CONTAINER_NAME}
-    env_file: ../.env
+    container_name: sabnzbd
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
+      - ${CONFIG_FOLDER}/sabnzbd:/config
       - ${DATA_FOLDER}/usenet:/data/usenet:rw
     ports:
-      - "${PORT}:8080"
+      - "${SABNZBD_PORT}:8080"
     restart: unless-stopped
