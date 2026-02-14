@@ -3,8 +3,6 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: ${CONTAINER_NAME}
     network_mode: "service:gluetun"
-    depends_on:
-    - gluetun
     env_file: 
       - ../.env
       - .env
