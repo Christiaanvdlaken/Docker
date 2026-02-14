@@ -11,5 +11,5 @@ services:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
       - ${DATA_FOLDER}/usenet:/data/usenet:rw
     ports:
-      - 8282:8080
+      - "${PORT}:8080"
     restart: unless-stopped
