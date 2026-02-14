@@ -6,9 +6,6 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
-    env_file: 
-      - ../.env
-      - .env
     ports:
       - "8180:8080" # qbittorrent
       - "8989:8989" # Sonarr
