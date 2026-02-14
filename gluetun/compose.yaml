@@ -1,6 +1,7 @@
 services:
   gluetun:
     image: qmcgaw/gluetun
+    container_name: ${CONTAINER_NAME}
     cap_add:
       - NET_ADMIN
     devices:
