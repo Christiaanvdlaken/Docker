@@ -1,0 +1,72 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - "8180:8080" # qbittorrent
+      - "6881:6881" # qbittorrent
+      - "6881:6881/udp" # qbittorrent
+      - "8989:8989" # Sonarr
+      - "9696:9696" # Prowlarr
+      - "8000:8000"   # Gluetun status API
+    volumes:
+      - ${CONFIG_FOLDER}/gluetun:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
+      - SERVER_CITIES=Amsterdam
+      - DNS_UPDATE=yes
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:4.6.0
+    container_name: qbittorrent
+    network_mode: "service:gluetun"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    env_file: 
+      - ../.env
+      - .env
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+      - WEBUI_PORT=${WEBUI_PORT}
+    volumes:
+      - ${CONFIG_FOLDER}/qbittorrent:/config
+      - ${DATA_FOLDER}/torrents:/data/torrents:rw
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    network_mode: "service:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_FOLDER}/prowlarr:/config
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    network_mode: "service:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+    volumes:
+      - ${CONFIG_FOLDER}/sonarr:/config
+      - ${DATA_FOLDER}:/data
+    restart: unless-stopped
