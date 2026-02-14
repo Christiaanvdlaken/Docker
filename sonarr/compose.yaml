@@ -16,6 +16,4 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
       - ${DATA_FOLDER}:/data
-    ports:
-      - ${PORT}:8989
     restart: unless-stopped
