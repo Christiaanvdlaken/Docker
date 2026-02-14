@@ -13,5 +13,5 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
     ports:
-      - 9696:9696
+      - "${PORT}:9696"
     restart: unless-stopped

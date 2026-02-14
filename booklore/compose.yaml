@@ -22,8 +22,8 @@ services:
       - .env
     volumes:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}/data:/app/data
-      - ${DATA_FOLDER}/books:/books
-      - ${DATA_FOLDER}/ebooksselfmark-book-downloader:/bookdrop
+      - ${DATA_FOLDER}/media/books:/books
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/bookdrop:/bookdrop
     healthcheck:
       test: wget -q -O - http://localhost:${BOOKLORE_PORT}/api/v1/healthcheck
       interval: 60s
