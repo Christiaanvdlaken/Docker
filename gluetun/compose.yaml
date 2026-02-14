@@ -1,0 +1,17 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - "8080:8080/tcp"
+    volumes:
+      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=WFUvjnjrGxdpHzeQRNwBvARoe//AUomaqBWjdR6p9hk=
+      - WIREGUARD_ADDRESSES=10.67.82.91/32
+      - SERVER_CITIES=Amsterdam
