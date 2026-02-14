@@ -1,7 +1,7 @@
 services:
   gluetun:
     image: qmcgaw/gluetun
-    container_name: ${CONTAINER_NAME}
+    container_name: gluetun
     cap_add:
       - NET_ADMIN
     devices:
@@ -14,7 +14,7 @@ services:
       - "8989:8989" # Sonarr
       - "9696:9696" # Prowlarr
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/gluetun
+      - ${CONFIG_FOLDER}/gluetun:/gluetun
     environment:
       - VPN_SERVICE_PROVIDER=mullvad
       - VPN_TYPE=wireguard

@@ -1,17 +1,14 @@
 services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
-    container_name: ${CONTAINER_NAME}
+    container_name: sonarr
     network_mode: "service:gluetun"
-    env_file: 
-      - ../.env
-      - .env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=${UMASK}
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config
+      - ${CONFIG_FOLDER}/sonarr:/config
       - ${DATA_FOLDER}:/data
     restart: unless-stopped
