@@ -17,7 +17,7 @@ services:
     environment:
       - VPN_SERVICE_PROVIDER=mullvad
       - VPN_TYPE=wireguard
-      - WIREGUARD_PRIVATE_KEY=WFUvjnjrGxdpHzeQRNwBvARoe//AUomaqBWjdR6p9hk=
-      - WIREGUARD_ADDRESSES=10.67.82.91/32
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESS}
       - SERVER_CITIES=Amsterdam
       - DNS_UPDATE=yes
