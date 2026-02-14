@@ -30,15 +30,13 @@ services:
     network_mode: "service:gluetun"
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
-    env_file: 
-      - ../.env
-      - .env
+
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=${UMASK}
-      - WEBUI_PORT=${WEBUI_PORT}
+      - WEBUI_PORT=${WEBUI_PORT_QBIT}
     volumes:
       - ${CONFIG_FOLDER}/qbittorrent:/config
       - ${DATA_FOLDER}/torrents:/data/torrents:rw
