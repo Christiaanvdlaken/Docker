@@ -8,7 +8,7 @@ services:
       - TZ=${TZ}
       - UMASK=${UMASK}
     ports:
-      - 8989:8989
+      - ${SONARR_PORT}:8989
     volumes:
       - ${CONFIG_FOLDER}/sonarr:/config
       - ${DATA_FOLDER}:/data
