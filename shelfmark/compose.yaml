@@ -1,7 +1,7 @@
 services:
   shelfmark:
     image: ghcr.io/calibrain/shelfmark:latest
-    container_name: ${CONTAINER_NAME}
+    container_name: shelfmark
     environment:
       PUID: ${PUID}
       PGID: ${PGID}
@@ -13,6 +13,6 @@ services:
     restart: unless-stopped
     volumes:
       - ${DATA_FOLDER}/media/books:/books # Default destination for book downloads
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/config # App configuration
+      - ${CONFIG_FOLDER}/shelfmark:/config # App configuration
       # Required for torrent / usenet - path must match your download client's volume exactly
       - ${DATA_FOLDER}/${CONTAINER_NAME}:/path/to/downloads
