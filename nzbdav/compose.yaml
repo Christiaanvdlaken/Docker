@@ -1,7 +1,7 @@
 services:
-  nzbdav_rclone:
-    image: rclone/rclone:latest
-    container_name: nzbdav_rclone
+  nzbdav:
+    image: nzbdav/nzbdav:latest
+    container_name: nzbdav
     restart: unless-stopped
     healthcheck:
       test: curl -f http://localhost:3000/health || exit 1
@@ -21,10 +21,23 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_FOLDER}/rclone.conf:/config/rclone/rclone.conf
+      - ${CONFIG_FOLDER}/nzbdav:/config
+      - /mnt:/mnt
+
+  nzbdav_rclone:
+    image: rclone/rclone:latest
+    container_name: nzbdav_rclone
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      # Host Path : Container Path : Propagation
       - /mnt:/mnt:rshared
+      - ${CONFIG_FOLDER}/rclone.conf:/config/rclone/rclone.conf
     cap_add:
-    - SYS_ADMIN
+      - SYS_ADMIN
     security_opt:
       - apparmor:unconfined
     devices:
