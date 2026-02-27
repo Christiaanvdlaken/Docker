@@ -12,8 +12,7 @@ services:
       - "8180:8080" # qbittorrent
       - "6881:6881" # qbittorrent
       - "6881:6881/udp" # qbittorrent
-      - "8989:8989" # Sonarr
-      - "9696:9696" # Prowlarr
+      - "8080:8080"   # sabnzbd
       - "8000:8000"   # Gluetun status API
     volumes:
       - ${CONFIG_FOLDER}/gluetun:/gluetun
@@ -43,28 +42,15 @@ services:
       - ${DATA_FOLDER}/torrents:/data/torrents:rw
     restart: unless-stopped
 
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
     network_mode: "service:gluetun"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - UMASK=${UMASK}
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_FOLDER}/prowlarr:/config
-    restart: unless-stopped
-  sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    container_name: sonarr
-    network_mode: "container:gluetun"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - UMASK=${UMASK}
-    volumes:
-      - ${CONFIG_FOLDER}/sonarr:/config
-      - ${DATA_FOLDER}:/data
+      - ${CONFIG_FOLDER}/sabnzbd:/config
+      - ${DATA_FOLDER}/usenet:/data/usenet:rw
     restart: unless-stopped
