@@ -15,4 +15,4 @@ services:
       - ${DATA_FOLDER}/media/books:/books # Default destination for book downloads
       - ${CONFIG_FOLDER}/shelfmark:/config # App configuration
       # Required for torrent / usenet - path must match your download client's volume exactly
-      - ${DATA_FOLDER}/${CONTAINER_NAME}:/path/to/downloads
+      - ${DATA_FOLDER}/shelfmark:/path/to/downloads
