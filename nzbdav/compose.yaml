@@ -23,3 +23,29 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/nzbdav:/config
       - /mnt:/mnt
+    cap_add:
+    - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    depends_on:
+      nzbdav:
+        condition: service_healthy
+        restart: true
+    # Optimized mounting flags for streaming
+    # 0M buffer size prevents double-caching (Kernel + RClone)
+    # 512M read-ahead ensures smooth playback
+    command: >
+      mount nzbdav: /mnt/remote/nzbdav
+        --uid=1000
+        --gid=1000
+        --allow-other
+        --links
+        --use-cookies
+        --vfs-cache-mode=full
+        --vfs-cache-max-size=20G
+        --vfs-cache-max-age=24h
+        --buffer-size=0M
+        --vfs-read-ahead=512M
+        --dir-cache-time=20s
