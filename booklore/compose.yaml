@@ -17,9 +17,6 @@ services:
         condition: service_healthy
     ports:
       - "${BOOKLORE_PORT}:${BOOKLORE_PORT}"
-    env_file: 
-      - ../.env
-      - .env
     volumes:
       - ${CONFIG_FOLDER}/booklore/data:/app/data
       - ${DATA_FOLDER}/media/books:/books
