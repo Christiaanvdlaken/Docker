@@ -21,9 +21,9 @@ services:
       - ../.env
       - .env
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/data:/app/data
+      - ${CONFIG_FOLDER}/booklore/data:/app/data
       - ${DATA_FOLDER}/media/books:/books
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/bookdrop:/bookdrop
+      - ${CONFIG_FOLDER}/booklore/bookdrop:/bookdrop
     healthcheck:
       test: wget -q -O - http://localhost:${BOOKLORE_PORT}/api/v1/healthcheck
       interval: 60s
