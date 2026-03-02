@@ -5,8 +5,8 @@ services:
     # image: ghcr.io/booklore-app/booklore:latest
     container_name: booklore
     environment:
-      - USER_ID=${APP_USER_ID}
-      - GROUP_ID=${APP_GROUP_ID}
+      - USER_ID=${PUID}
+      - GROUP_ID=${PGID}
       - TZ=${TZ}
       - DATABASE_URL=${DATABASE_URL}
       - DATABASE_USERNAME=${DB_USER}
