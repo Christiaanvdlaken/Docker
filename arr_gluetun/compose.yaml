@@ -24,8 +24,7 @@ services:
       - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
       - SERVER_CITIES=Amsterdam
       - DNS_UPDATE=yes
-
-   qbittorrent:
+  qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:4.6.0
     container_name: qbittorrent
     network_mode: "service:gluetun"
