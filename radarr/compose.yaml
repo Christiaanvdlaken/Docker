@@ -3,7 +3,7 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     networks:
-      - docker_netwerkjee
+      - media_net
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -15,3 +15,7 @@ services:
     ports:
       - ${RADARR_PORT}:7878
     restart: unless-stopped
+
+networks:
+  media_net:
+    external: true
