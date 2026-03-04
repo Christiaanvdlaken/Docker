@@ -14,7 +14,7 @@ services:
       - "6881:6881/udp" # qbittorrent
       - "${SABNZBD_PORT}:${SABNZBD_PORT}"   # sabnzbd
       - "8000:8000"   # Gluetun status API
-      - "${SHELFMARK_PORT}:${SHELFMARK_PORT}"   # shelfmark
+      - "${PROWLARR_PORT}:${PROWLARR_PORT}"  # prowlarr
     volumes:
       - ${CONFIG_FOLDER}/gluetun:/gluetun
     environment:
@@ -55,16 +55,16 @@ services:
       - ${DATA_FOLDER}/usenet:/data/usenet:rw
     restart: unless-stopped
   
-  shelfmark:
-    image: ghcr.io/calibrain/shelfmark:latest
-    container_name: shelfmark
-    network_mode: "service:gluetun"
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    network_mode: "service:gluetun"    
     environment:
-      PUID: ${PUID}
-      PGID: ${PGID}
-    restart: unless-stopped
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
+      - TZ=${TZ}
     volumes:
-      - ${DATA_FOLDER}/media/books:/books # Default destination for book downloads
-      - ${CONFIG_FOLDER}/shelfmark:/config # App configuration
-      # Required for torrent / usenet - path must match your download client's volume exactly
-      - ${DATA_FOLDER}/usenet/downloads/books:/usenet_books # usenet download location
+      - ${CONFIG_FOLDER}/prowlarr:/config
+      - ${DATA_FOLDER}:/data 
+    restart: unless-stopped
