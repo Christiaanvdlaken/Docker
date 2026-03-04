@@ -4,6 +4,9 @@ services:
     container_name: radarr
     networks:
       - media_net
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
