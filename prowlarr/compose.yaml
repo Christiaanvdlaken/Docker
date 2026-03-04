@@ -11,4 +11,5 @@ services:
       - ${PROWLARR_PORT}:9696
     volumes:
       - ${CONFIG_FOLDER}/prowlarr:/config
+      - ${DATA_FOLDER}:/data 
     restart: unless-stopped
