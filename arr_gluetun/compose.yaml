@@ -15,6 +15,8 @@ services:
       - "${SABNZBD_PORT}:${SABNZBD_PORT}"   # sabnzbd
       - "8000:8000"   # Gluetun status API
       - "${PROWLARR_PORT}:${PROWLARR_PORT}"  # prowlarr
+    networks:
+      - docker_netwerkjee
     volumes:
       - ${CONFIG_FOLDER}/gluetun:/gluetun
     environment:
