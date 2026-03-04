@@ -59,6 +59,7 @@ services:
   shelfmark:
     image: ghcr.io/calibrain/shelfmark:latest
     container_name: shelfmark
+    network_mode: "service:gluetun"
     environment:
       PUID: ${PUID}
       PGID: ${PGID}
