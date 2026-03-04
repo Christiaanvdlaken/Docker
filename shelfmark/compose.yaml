@@ -6,7 +6,7 @@ services:
       PUID: ${PUID}
       PGID: ${PGID}
     ports:
-      - 8084:8084
+      - ${SHELFMARK_PORT}:8084
     restart: unless-stopped
     volumes:
       - ${DATA_FOLDER}/media/books:/books # Default destination for book downloads
