@@ -1,6 +1,6 @@
 services:
   profilarr:
-    image: santiagosayshey/profilarr:lates
+    image: santiagosayshey/profilarr:latest
     container_name: profilarr
     networks:
       - media_net
