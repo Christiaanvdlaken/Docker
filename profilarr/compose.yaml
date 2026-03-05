@@ -15,11 +15,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - PARSER_HOST=parser
-      - PARSER_PORT=5000
-    depends_on:
-      parser:
-        condition: service_healthy
+
 
 # Media netwerk zodat alles in hetzelfde netwerk zit en de containers elkaar kunnen vinden
 networks:
