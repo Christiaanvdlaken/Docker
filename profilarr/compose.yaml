@@ -1,6 +1,6 @@
 services:
   profilarr:
-    image: ghcr.io/dictionarry-hub/profilarr:latest
+    image: santiagosayshey/profilarr:lates
     container_name: profilarr
     networks:
       - media_net
@@ -20,13 +20,6 @@ services:
     depends_on:
       parser:
         condition: service_healthy
-
-  # Optional - only needed for CF/QP testing
-  parser:
-    image: ghcr.io/dictionarry-hub/profilarr-parser:latest
-    container_name: profilarr-parser
-    expose:
-      - "5000"
 
 # Media netwerk zodat alles in hetzelfde netwerk zit en de containers elkaar kunnen vinden
 networks:

@@ -3,13 +3,13 @@ services:
     container_name: ${CONTAINER_NAME}
     image: bellamy/wallos:latest
     ports:
-      - ${PORT}:80
+      - ${WALLOS_PORT}:80
     env_file: 
       - ../.env
       - .env
     environment:
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/db:/var/www/html/db
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/logos:/var/www/html/images/uploads/logos
+      - ${CONFIG_FOLDER}/wallos/db:/var/www/html/db
+      - ${CONFIG_FOLDER}/wallos/logos:/var/www/html/images/uploads/logos
     restart: unless-stopped
