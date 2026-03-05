@@ -4,6 +4,11 @@ services:
     image: ghcr.io/seerr-team/seerr:latest
     init: true
     container_name: seerr
+    networks:
+      - media_net
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     environment:
       - LOG_LEVEL=debug
       - TZ=${TZ}
@@ -18,3 +23,8 @@ services:
       interval: 15s
       retries: 3
     restart: unless-stopped
+
+# Media netwerk zodat alles in hetzelfde netwerk zit en de containers elkaar kunnen vinden
+networks:
+  media_net:
+    external: true

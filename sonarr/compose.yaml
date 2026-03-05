@@ -2,6 +2,11 @@ services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
+    networks:
+      - media_net
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -13,3 +18,8 @@ services:
       - ${CONFIG_FOLDER}/sonarr:/config
       - ${DATA_FOLDER}:/data
     restart: unless-stopped
+
+# Media netwerk zodat alles in hetzelfde netwerk zit en de containers elkaar kunnen vinden
+networks:
+  media_net:
+    external: true
