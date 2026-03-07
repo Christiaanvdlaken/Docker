@@ -4,7 +4,7 @@ services:
     container_name: swiparr
     restart: unless-stopped
     environment:
-      - JELLYFIN_URL=${BASE_URL}:{JELLYFIN_PORT}
+      - JELLYFIN_URL=${URL_SWIPARR}
       # - JELLYFIN_PUBLIC_URL=https://jellyfin.yourdomain.com
     volumes:
       - ${CONFIG_FOLDER}/swiparr/swiparr-data:/app/data
