@@ -4,12 +4,12 @@ services:
     #   context: .
     #   dockerfile: Dockerfile
     image: ghcr.io/dispatcharr/dispatcharr:latest
-    container_name: ${CONTAINER_NAME}
+    container_name: dispatcharr
     ports:
-      - ${PORT}:9191
+      - ${DISPATCHARR_PORT}:9191
 
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/dispatcharr_data:/data
+      - ${CONFIG_FOLDER}/dispatcharr/dispatcharr_data:/data
     environment:
       - DISPATCHARR_ENV=aio
       - REDIS_HOST=localhost
@@ -40,7 +40,3 @@ services:
     #              - driver: nvidia
     #                count: all
     #                capabilities: [gpu]
-
-
-volumes:
-  dispatcharr_data:

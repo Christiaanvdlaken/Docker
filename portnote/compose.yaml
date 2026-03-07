@@ -2,7 +2,7 @@ services:
   web:
     image: haedlessdev/portnote:latest
     ports:
-      - "3000:3000"
+      - "${PORTNOTE_PORT}:3000"
     environment:
       JWT_SECRET: RANDOM_SECRET # Replace with a secure random string
       USER_SECRET: RANDOM_SECRET # Replace with a secure random string
