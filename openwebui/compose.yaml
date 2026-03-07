@@ -3,7 +3,7 @@ services:
     image: ghcr.io/open-webui/open-webui:main
     container_name: openwebui
     ports:
-      - "${PORT}:8080"
+      - "${OPENWEBUI_PORT}:8080"
     volumes:
       - ${CONFIG_FOLDER}/openwebui:/app/backend/data
 
