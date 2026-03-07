@@ -22,7 +22,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${CONFIG_FOLDER}/nzbdav:/config
-      - /mnt:/mnt
+      - ${DATA_FOLDER}:/mnt
 
   nzbdav_rclone:
     image: rclone/rclone:latest
