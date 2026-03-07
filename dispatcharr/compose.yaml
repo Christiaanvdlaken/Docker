@@ -7,9 +7,7 @@ services:
     container_name: ${CONTAINER_NAME}
     ports:
       - ${PORT}:9191
-    env_file: 
-      - ../.env
-      - .env
+
     volumes:
       - ${CONFIG_FOLDER}/${CONTAINER_NAME}/dispatcharr_data:/data
     environment:

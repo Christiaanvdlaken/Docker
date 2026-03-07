@@ -5,9 +5,7 @@ services:
     image: 'docker.io/jc21/nginx-proxy-manager:latest'
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
-    env_file: 
-      - ../.env
-      - .env
+
     ports:
       - '80:80'
       - '81:81'

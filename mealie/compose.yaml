@@ -1,18 +1,15 @@
 services:
   mealie:
     image: ghcr.io/mealie-recipes/mealie:v1.0.0
-    container_name: ${CONTAINER_NAME}
+    container_name: mealie
     ports:
-      - "${PORT}:9000"
+      - "${MEALIE_PORT}:9000"
     deploy:
       resources:
         limits:
           memory: 1000M
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}:/app/data/
-    env_file: 
-      - ../.env
-      - .env
+      - ${CONFIG_FOLDER}/mealie:/app/data/
     environment:
       - ALLOW_SIGNUP=${ALLOW_SIGNUP}
       - PUID=${PUID}

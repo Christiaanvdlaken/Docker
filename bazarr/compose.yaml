@@ -2,9 +2,11 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: ${CONTAINER_NAME}
-    env_file: 
-      - ../.env
-      - .env
+    networks:
+      - media_net
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -16,3 +18,8 @@ services:
     ports:
       - ${PORT}:6767
     restart: unless-stopped
+
+# Media netwerk zodat alles in hetzelfde netwerk zit en de containers elkaar kunnen vinden
+networks:
+  media_net:
+    external: true
