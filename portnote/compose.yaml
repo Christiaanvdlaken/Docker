@@ -4,11 +4,11 @@ services:
     ports:
       - "${PORTNOTE_PORT}:3000"
     environment:
-      JWT_SECRET: RANDOM_SECRET # Replace with a secure random string
-      USER_SECRET: RANDOM_SECRET # Replace with a secure random string
-      LOGIN_USERNAME: username # Replace with a username
-      LOGIN_PASSWORD: mypassword # Replace with a custom password
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
+      JWT_SECRET: ${PORTNOTE_JWT_SECRET}
+      USER_SECRET: ${PORTNOTE_USER_SECRET}
+      LOGIN_USERNAME: ${PORTNOTE_LOGIN_USERNAME}
+      LOGIN_PASSWORD: ${PORTNOTE_LOGIN_PASSWORD} 
+      DATABASE_URL: ${PORTNOTE_DATABASE_URL}
     depends_on:
       db:
         condition: service_started
