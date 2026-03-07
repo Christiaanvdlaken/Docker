@@ -2,6 +2,7 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
+    networks:
       - media_net
     dns:
       - 1.1.1.1 # force cloudflare DNS
