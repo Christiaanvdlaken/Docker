@@ -4,6 +4,9 @@ services:
     # Alternative: Use GitHub Container Registry
     # image: ghcr.io/booklore-app/booklore:latest
     container_name: booklore
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     environment:
       - USER_ID=${PUID}
       - GROUP_ID=${PGID}
