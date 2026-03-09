@@ -1,6 +1,7 @@
 services:
   web:
     image: haedlessdev/portnote:latest
+    restart: always
     ports:
       - "${PORTNOTE_PORT}:3000"
     environment:
@@ -15,6 +16,7 @@ services:
 
   agent:
     image: haedlessdev/portnote-agent:latest
+    restart: always
     environment:
       DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres"
     depends_on:
