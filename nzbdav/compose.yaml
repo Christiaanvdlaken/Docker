@@ -15,6 +15,9 @@ services:
       timeout: 5s
     ports:
       - ${NZBDAV_PORT}:3000
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     environment:
       # Change these IDs to match your Docker user that you got from above
       - PUID=${PUID}
