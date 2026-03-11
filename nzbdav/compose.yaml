@@ -25,7 +25,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${CONFIG_FOLDER}/nzbdav:/config
-      - ${DATA_FOLDER}:/mnt
+      - ${DATA_FOLDER}:/mnt/data
 
   nzbdav_rclone:
     image: rclone/rclone:latest
@@ -37,7 +37,7 @@ services:
       - TZ=${TZ}
     volumes:
       # Host Path : Container Path : Propagation
-      - ${DATA_FOLDER}:/mnt:rshared
+      - ${DATA_FOLDER}:/mnt/data:rshared
       - ${CONFIG_FOLDER}/nzbdav/rclone.conf:/config/rclone/rclone.conf
     cap_add:
       - SYS_ADMIN
@@ -54,8 +54,8 @@ services:
     # 512M read-ahead ensures smooth playback
     command: >
       mount nzbdav: /mnt/remote/nzbdav
-        --uid=1000
-        --gid=1000
+        --uid=${PUID}
+        --gid=${PGID}
         --allow-other
         --links
         --use-cookies
