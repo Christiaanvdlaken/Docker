@@ -102,11 +102,9 @@ services:
         - PUID=${PUID}
         - PGID=${PGID}
         - TZ=${TZ}
-        - SABNZBD_PORT=8081
       volumes:
         - ${CONFIG_FOLDER}/nzbdav:/config
         - ${DATA_FOLDER}:/data
-
 
 networks:
   media_net:
