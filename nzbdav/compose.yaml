@@ -38,6 +38,7 @@ services:
     volumes:
       # Host Path : Container Path : Propagation
       - ${DATA_FOLDER}:/mnt/data:rshared
+      - ${DATA_FOLDER}:/mnt/remote:rshared
       - ${CONFIG_FOLDER}/nzbdav/rclone.conf:/config/rclone/rclone.conf
     cap_add:
       - SYS_ADMIN
