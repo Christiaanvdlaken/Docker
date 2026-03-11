@@ -25,4 +25,4 @@ services:
       - TZ=${TZ}
     volumes:
       - ${CONFIG_FOLDER}/nzbdav:/config
-      - ${DATA_FOLDER}:/mnt/data
+      - ${DATA_FOLDER}:/data
