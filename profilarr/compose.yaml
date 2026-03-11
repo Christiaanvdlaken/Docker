@@ -2,6 +2,7 @@ services:
   profilarr:
     image: santiagosayshey/profilarr:latest
     container_name: profilarr
+    restart: unless-stopped
     networks:
       - media_net
     dns:
