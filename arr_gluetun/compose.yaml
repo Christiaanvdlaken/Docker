@@ -16,7 +16,6 @@ services:
       - "6881:6881/udp"
       - "${SABNZBD_PORT}:${SABNZBD_PORT}"
       - "${PROWLARR_PORT}:${PROWLARR_PORT}"
-      - "${NZBDAV_PORT}:3000"
       - "8000:8000"
     volumes:
       - ${CONFIG_FOLDER}/gluetun:/gluetun
@@ -79,32 +78,6 @@ services:
       - ${CONFIG_FOLDER}/prowlarr:/config
       - ${DATA_FOLDER}:/data
     restart: unless-stopped
-
-  nzbdav:
-      image: nzbdav/nzbdav:latest
-      container_name: nzbdav
-      restart: unless-stopped
-      network_mode: "container:gluetun"
-      depends_on:
-        - gluetun
-      healthcheck:
-        test: curl -f http://localhost:3000/health || exit 1
-        # Check every 1 minute
-        interval: 1m
-        # If it fails 3 times (3 minutes total), restart it
-        retries: 3
-        # Give it 5 seconds to boot up
-        start_period: 5s
-        # If it doesn't answer in 5 seconds, assume it's frozen
-        timeout: 5s
-      environment:
-        # Change these IDs to match your Docker user that you got from above
-        - PUID=${PUID}
-        - PGID=${PGID}
-        - TZ=${TZ}
-      volumes:
-        - ${CONFIG_FOLDER}/nzbdav:/config
-        - ${DATA_FOLDER}:/data
 
 networks:
   media_net:
