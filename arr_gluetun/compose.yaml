@@ -14,7 +14,7 @@ services:
       - "${WEBUI_PORT_QBIT}:${WEBUI_PORT_QBIT}"
       - "6881:6881"
       - "6881:6881/udp"
-      - "${SABNZBD_PORT}:${SABNZBD_PORT}"
+      - "${SABNZBD_PORT}:8080"
       - "${PROWLARR_PORT}:${PROWLARR_PORT}"
       - "8000:8000"
     volumes:

@@ -1,0 +1,9 @@
+services:
+  movie-roulette:
+    image: sahara101/movie-roulette:latest
+    container_name: movie-roulette
+    ports:
+      - "${MOVIE_ROULETTE_PORT}:4000"
+    volumes:
+      - ${CONFIG_FOLDER}/movie_roulette:/app/data
+    restart: unless-stopped
