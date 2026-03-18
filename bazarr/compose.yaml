@@ -16,7 +16,7 @@ services:
       - ${CONFIG_FOLDER}/bazarr:/config
       - ${DATA_FOLDER}:/data/media
     ports:
-      - ${BAZARR_PORT}:6767
+      - ${BAZARR_PORT}:777
     restart: unless-stopped
 
 # Media netwerk zodat alles in hetzelfde netwerk zit en de containers elkaar kunnen vinden
