@@ -5,9 +5,11 @@ services:
     #   dockerfile: Dockerfile
     image: ghcr.io/dispatcharr/dispatcharr:latest
     container_name: dispatcharr
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     ports:
       - ${DISPATCHARR_PORT}:9191
-
     volumes:
       - ${CONFIG_FOLDER}/dispatcharr/dispatcharr_data:/data
     environment:
