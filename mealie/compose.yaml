@@ -8,6 +8,9 @@ services:
       resources:
         limits:
           memory: 1000M
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     volumes:
       - ${CONFIG_FOLDER}/mealie:/app/data/
     environment:
