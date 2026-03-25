@@ -1,8 +1,10 @@
 services:
   bentopdf:
     image: ghcr.io/alam00000/bentopdf:latest 
-    container_name: ${CONTAINER_NAME}
+    container_name: bentopdf
     env_file: .env    
     ports:
-      - '${PORT}:8080'
+      - '${BENTOPDF_PORT}:8080'
+    volumes:
+      - '${CONFIG_FOLDER}/bentopdf:/config'
     restart: unless-stopped
