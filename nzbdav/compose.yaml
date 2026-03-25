@@ -1,5 +1,5 @@
 services:
-  gluetun:
+  gluetun_nzbdav:
     image: qmcgaw/gluetun
     container_name: gluetun_nzbdav
     hostname: gluetun_nzbdav
