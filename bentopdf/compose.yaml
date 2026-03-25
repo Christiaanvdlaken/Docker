@@ -6,4 +6,4 @@ services:
       - '${BENTOPDF_PORT}:8080'
     volumes:
       - '${CONFIG_FOLDER}/bentopdf:/config'
-    restart: unless-stoppednano 
+    restart: unless-stopped
