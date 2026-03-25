@@ -18,7 +18,6 @@ services:
       - "${PROWLARR_PORT}:9696"
       - "8000:8000"
       - ${DISPATCHARR_PORT}:9191
-      - ${NZBDAV_PORT}:3000
     volumes:
       - ${CONFIG_FOLDER}/gluetun:/gluetun
     environment:
