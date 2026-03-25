@@ -86,6 +86,9 @@ services:
     #   dockerfile: Dockerfile
     image: ghcr.io/dispatcharr/dispatcharr:latest
     container_name: dispatcharr
+    network_mode: "container:gluetun"
+    depends_on:
+      - gluetun
     volumes:
       - ${CONFIG_FOLDER}/dispatcharr/dispatcharr_data:/data
     environment:
@@ -93,6 +96,7 @@ services:
       - REDIS_HOST=localhost
       - CELERY_BROKER_URL=redis://localhost:6379/0
       - DISPATCHARR_LOG_LEVEL=info
+    restart: unless-stopped
 
 networks:
   media_net:
