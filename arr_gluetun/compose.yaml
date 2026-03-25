@@ -17,6 +17,7 @@ services:
       - "${SABNZBD_PORT}:8080"
       - "${PROWLARR_PORT}:${PROWLARR_PORT}"
       - "8000:8000"
+      - ${DISPATCHARR_PORT}:9191
     volumes:
       - ${CONFIG_FOLDER}/gluetun:/gluetun
     environment:
@@ -78,6 +79,20 @@ services:
       - ${CONFIG_FOLDER}/prowlarr:/config
       - ${DATA_FOLDER}:/data
     restart: unless-stopped
+
+  dispatcharr:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: ghcr.io/dispatcharr/dispatcharr:latest
+    container_name: dispatcharr
+    volumes:
+      - ${CONFIG_FOLDER}/dispatcharr/dispatcharr_data:/data
+    environment:
+      - DISPATCHARR_ENV=aio
+      - REDIS_HOST=localhost
+      - CELERY_BROKER_URL=redis://localhost:6379/0
+      - DISPATCHARR_LOG_LEVEL=info
 
 networks:
   media_net:
