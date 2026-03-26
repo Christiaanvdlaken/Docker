@@ -3,6 +3,9 @@ services:
     image: fnsys/dockhand:latest
     container_name: dockhand
     restart: unless-stopped
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     ports:
       - "${DOCKHAND_PORT}:3000"
     volumes:

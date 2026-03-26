@@ -3,6 +3,9 @@ services:
     image: 'docker.io/jc21/nginx-proxy-manager:latest'
     container_name: NginxProxyManager
     restart: unless-stopped
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     ports:
       - '${NPM_HTTP_PORT}:80'
       - '${NPM_PORTAL_PORT}:81' 
