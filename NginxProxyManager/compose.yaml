@@ -4,9 +4,9 @@ services:
     container_name: NginxProxyManager
     restart: unless-stopped
     ports:
-      - '80:80'
-      - '${NPM_PORT}:81'
-      - '443:443'
+      - '${NPM_HTTP_PORT}:80'
+      - '${NPM_PORTAL_PORT}:81' 
+      - '${NPM_HTTPS_PORT}:443'
     volumes:
       - ${CONFIG_FOLDER}/NginxProxyManager/data:/data
       - ${CONFIG_FOLDER}/NginxProxyManager/letsencrypt:/etc/letsencrypt
