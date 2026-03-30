@@ -1,19 +1,17 @@
-version: "3.7"
-
 services:
   broker:
-    image: docker.io/library/redis:7
+    image: docker.io/library/redis:8
     restart: unless-stopped
     container_name: paperless_broker
     volumes:
-      - redisdata:/data
+      - ${CONFIG_FOLDER}/paperless/redisdata:/data
 
   db:
-    image: docker.io/library/postgres:16
+    image: docker.io/library/postgres:18
     restart: unless-stopped
     container_name: paperless_db
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/pgdata:/var/lib/postgresql/data
+      - ${CONFIG_FOLDER}/paperless/pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -27,16 +25,12 @@ services:
       - db
       - broker
     ports:
-      - "8686:8000"
+      - "${PAPERLESS_PORT}:8000"
     volumes:
-      - ${CONFIG_FOLDER}/${CONTAINER_NAME}/:/usr/src/paperless/data
+      - ${CONFIG_FOLDER}/paperless/:/usr/src/paperless/data
       - ${NAS_FOLDER}/paperless:/usr/src/paperless/media
-      - ./export:/usr/src/paperless/export
-      - ./consume:/usr/src/paperless/consume
+      - ${CONFIG_FOLDER}/paperless/export:/usr/src/paperless/export
+      - ${CONFIG_FOLDER}/paperless/consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
-
-volumes:
-  pgdata:
-  redisdata:
