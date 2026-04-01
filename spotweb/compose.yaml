@@ -9,6 +9,8 @@ services:
       - DB_USER=${MYSQL_USER_SPOTWEB}
       - DB_PASS=${MYSQL_PASSWORD_SPOTWEB}
       - CRON_INTERVAL=*/5 * * * *
+    volumes:
+      - ${CONFIG_FOLDER}/spotweb:/config
     ports:
       - 8085:80/tcp
     network_mode: synobridge
