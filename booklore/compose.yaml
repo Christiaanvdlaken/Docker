@@ -1,6 +1,6 @@
 services:
   booklore:
-    image: herraristotle/BookLore:master # public archive backup image
+    image: grimmory/grimmory:latest # successor to booklore
     # Alternative: Use GitHub Container Registry
     # image: ghcr.io/booklore-app/booklore:latest
     container_name: booklore
