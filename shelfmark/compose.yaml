@@ -11,8 +11,14 @@ services:
     ports:
       - ${SHELFMARK_PORT}:8084
     restart: unless-stopped
+    networks:
+      - docker_net
     volumes:
       - ${DATA_FOLDER}/media/books:/books # Default destination for book downloads
       - ${CONFIG_FOLDER}/shelfmark:/config # App configuration
       # Required for torrent / usenet - path must match your download client's volume exactly
       - ${DATA_FOLDER}/usenet/downloads/books:/usenet_books # usenet download location
+
+networks:
+  docker_net:
+    external: true

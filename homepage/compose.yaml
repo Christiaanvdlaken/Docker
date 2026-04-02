@@ -12,3 +12,9 @@ services:
       - ${CONFIG_FOLDER}/homepage:/config
       - /var/run/docker.sock:/var/run/docker.sock:ro # Mount de Docker socket zodat de container andere containers kan aansturen
     restart: unless-stopped
+    networks:
+      - docker_net
+
+networks:
+  docker_net:
+    external: true

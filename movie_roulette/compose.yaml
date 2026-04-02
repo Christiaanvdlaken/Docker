@@ -7,3 +7,9 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/movie_roulette:/app/data
     restart: unless-stopped
+    networks:
+      - docker_net
+
+networks:
+  docker_net:
+    external: true

@@ -3,6 +3,8 @@ services:
     image: ghcr.io/m3sserstudi0s/swiparr:latest
     container_name: swiparr
     restart: unless-stopped
+    networks:
+      - docker_net
     environment:
       - JELLYFIN_URL=${URL_SWIPARR}
       # - JELLYFIN_PUBLIC_URL=https://jellyfin.yourdomain.com
@@ -10,3 +12,7 @@ services:
       - ${CONFIG_FOLDER}/swiparr/swiparr-data:/app/data
     ports:
       - ${SWIPARR_PORT}:4321
+
+networks:
+  docker_net:
+    external: true

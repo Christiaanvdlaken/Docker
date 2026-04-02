@@ -10,3 +10,9 @@ services:
       - ${CONFIG_FOLDER}/wallos/db:/var/www/html/db
       - ${CONFIG_FOLDER}/wallos/logos:/var/www/html/images/uploads/logos
     restart: unless-stopped
+    networks:
+      - docker_net
+
+networks:
+  docker_net:
+    external: true

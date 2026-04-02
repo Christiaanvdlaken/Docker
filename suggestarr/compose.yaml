@@ -3,6 +3,8 @@ services:
     image: ciuse99/suggestarr:latest
     container_name: SuggestArr
     restart: always
+    networks:
+      - docker_net
     dns:
       - 1.1.1.1
       - 8.8.8.8
@@ -15,3 +17,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       # Optional: Customize the port (defaults to 5000 if not set)
       - "${SUGGESTARR_PORT}:5000"
+
+networks:
+  docker_net:
+    external: true
