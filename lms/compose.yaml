@@ -1,0 +1,19 @@
+services:
+  lms:
+    container_name: lms
+    image: lmscommunity/lyrionmusicserver
+    network_mode: host
+    volumes:
+      - ${CONFIG_FOLDER}/lms/config:/config:rw
+      - ${CONFIG_FOLDER}/lms/music:/music:ro
+      - ${CONFIG_FOLDER}/lms/playlist:/playlist:rw
+      - /etc/localtime:/etc/localtime:ro # gebruik juiste tijdzone van host
+      - /etc/timezone:/etc/timezone:ro # gebruik juiste tijdzone van host
+    ports:
+      - 9000:9000/tcp
+      - 9090:9090/tcp
+      - 3483:3483/tcp
+      - 3483:3483/udp
+    environment:
+      - HTTP_PORT=${LMS_PORT}
+    restart: always
