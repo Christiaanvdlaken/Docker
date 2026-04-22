@@ -3,7 +3,7 @@ services:
     image: rhasspy/wyoming-piper:latest
     container_name: wyoming-piper
     command: >
-      --voice nl_NL-mls_1840-medium
+      --voice nl_NL-alex-medium
     ports:
       - "10200:10200"
     volumes:
