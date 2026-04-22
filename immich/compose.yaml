@@ -16,6 +16,7 @@ services:
     # extends:
     #   file: hwaccel.transcoding.yml
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    user: "${PUID}:${PGID}"
     dns:
       - 1.1.1.1 # force cloudflare DNS
       - 8.8.8.8 # force google DNS
@@ -40,6 +41,7 @@ services:
     # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
     #   file: hwaccel.ml.yml
     #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+    user: "${PUID}:${PGID}"
     dns:
       - 1.1.1.1 # force cloudflare DNS
       - 8.8.8.8 # force google DNS
