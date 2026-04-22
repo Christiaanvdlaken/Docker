@@ -1,20 +1,11 @@
 services:
-  piper:
-    image: lscr.io/linuxserver/piper:latest
-    container_name: piper
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - PIPER_VOICE=nl_NL-alex-medium
-      - LOCAL_ONLY= #optional
-      - PIPER_LENGTH=1.0 #optional
-      - PIPER_NOISE=0.667 #optional
-      - PIPER_NOISEW=0.333 #optional
-      - PIPER_SPEAKER=0 #optional
-      - NO_STREAMING= #optional
-    volumes:
-      - ${CONFIG_FOLDER}/piper/:/config
+  wyoming-piper:
+    image: rhasspy/wyoming-piper:latest
+    container_name: wyoming-piper
+    command: >
+      --voice nl_NL-mls_1840-medium
     ports:
-      - 10200:10200
+      - "10200:10200"
+    volumes:
+      - ${CONFIG_FOLDER}/piper:/data
     restart: unless-stopped
