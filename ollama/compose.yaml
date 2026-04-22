@@ -1,0 +1,16 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ${CONFIG_FOLDER}/ollama:/root/.ollama
+    # Optioneel: Beperk resources zodat je systeem niet vastloopt bij zware modellen
+    deploy:
+      resources:
+        reservations:
+          memory: 2G
+        limits:
+          memory: 8G # Geef hem max de helft van je RAM
