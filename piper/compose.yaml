@@ -7,6 +7,8 @@ services:
       - 8.8.8.8 # force google DNS
     command: >
       --voice nl_NL-alex-medium
+      --data-dir /data/data
+      --download-dir /data/downloads
     ports:
       - "10200:10200"
     volumes:
