@@ -6,9 +6,7 @@ services:
       - 1.1.1.1 # force cloudflare DNS
       - 8.8.8.8 # force google DNS
     command: >
-      --voice nl_NL-alex-medium
-      --data-dir /data/data
-      --download-dir /data/downloads
+      --list-voices
     ports:
       - "10200:10200"
     volumes:
