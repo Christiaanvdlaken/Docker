@@ -6,6 +6,10 @@ services:
     dns:
       - 1.1.1.1 # force cloudflare DNS
       - 8.8.8.8 # force google DNS
+    environment:
+      - OLLAMA_KEEP_ALIVE=-1
+      - OLLAMA_NUM_CTX=2048
+      - OLLAMA_NUM_THREAD=4
     ports:
       - "11434:11434"
     volumes:
