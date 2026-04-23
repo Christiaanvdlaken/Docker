@@ -3,6 +3,9 @@ services:
     image: rhasspy/wyoming-speech-to-phrase:latest
     container_name: speech-to-phrase
     restart: unless-stopped
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     ports:
       - "10301:10300"
     volumes:
