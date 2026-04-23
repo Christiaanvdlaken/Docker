@@ -9,7 +9,7 @@ services:
       - ${CONFIG_FOLDER}/speech_to_phrase/models:/models
       - ${CONFIG_FOLDER}/speech_to_phrase/train:/train
     environment:
-      - TZ={TZ}
+      - TZ=${TZ}
     command: >
       --hass-websocket-uri ws://${HASSS_URL}:8123/api/websocket
       --hass-token ${LLAT_STP}
