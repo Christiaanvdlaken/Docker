@@ -11,8 +11,8 @@ services:
     volumes:
       - ${CONFIG_FOLDER}:/data
     command: [
-      "--model", "small-int8", 
+      "--model", "medium-int8", 
       "--language", "nl", 
-      "--beam-size", "2", # pakt 2 mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
+      "--beam-size", "5", # pakt 2 mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
       "--data-dir", "/data"
     ]
