@@ -13,6 +13,6 @@ services:
     command: [
       "--model", "medium-int8", 
       "--language", "nl", 
-      "--beam-size", "5", # pakt 2 mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
+      "--beam-size", "2", # pakt 2 mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
       "--data-dir", "/data"
     ]
