@@ -9,7 +9,7 @@ services:
     ports:
       - "10300:10300"
     volumes:
-      - ${CONFIG_FOLDER}:/data
+      - ${CONFIG_FOLDER}/whisper:/data
     command: [
       "--model", "large-v3-turbo", 
       "--language", "nl",
