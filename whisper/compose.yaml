@@ -1,6 +1,6 @@
 services:
   wyoming-whisper:
-    image: ghcr.io/sjtrny/wyoming-whisper-intel:release
+    image: ghcr.io/sjtrny/wyoming-whisper-intel:release # specifieke image met optimalisaties voor Intel iGPU's
     container_name: wyoming-whisper
     restart: unless-stopped
     environment:
@@ -11,6 +11,8 @@ services:
     devices:
       # Geeft de container direct toegang tot de Intel GPU hardware
         - /dev/dri:/dev/dri
+    group_add:
+      - "992" # Voeg de gebruiker toe aan de 'video' groep (ID 992) voor toegang tot de GPU
     dns:
       - 1.1.1.1 # force cloudflare DNS
       - 8.8.8.8 # force google DNS
@@ -19,6 +21,7 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/whisper:/data
     command: [
+      "python3", "-m", "wyoming_whisper",
       "--model", "large-v3-turbo", 
       "--language", "nl", 
       "--beam-size", "2", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
