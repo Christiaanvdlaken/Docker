@@ -11,10 +11,9 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/whisper:/data
     command: [
-      "--model", "distil-large-v3", 
+      "--model", "medium-int8", 
       "--language", "nl",
-      "--compute-type", "int8",
-      "--beam-size", "3", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
+      "--beam-size", "2", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
       "--cpu-threads", "3", 
       "--data-dir", "/data",
       "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht."
