@@ -15,6 +15,7 @@ services:
       "--language", "nl",
       "--compute-type", "int8",
       "--beam-size", "3", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
-      "--threads", "3", 
-      "--data-dir", "/data"
+      "--cpu-threads", "3", 
+      "--data-dir", "/data",
+      "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht."
     ]
