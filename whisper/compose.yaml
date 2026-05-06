@@ -11,9 +11,10 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/whisper:/data
     command: [
-      "--model", "large-v3-turbo", 
+      "--model", "distil-large-v3", 
       "--language", "nl",
       "--compute-type", "int8",
       "--beam-size", "3", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
+      "--threads", "3", 
       "--data-dir", "/data"
     ]
