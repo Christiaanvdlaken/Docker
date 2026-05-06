@@ -3,6 +3,8 @@ services:
     image: ghcr.io/sjtrny/wyoming-whisper-intel:release
     container_name: wyoming-whisper
     restart: unless-stopped
+    # IPC host helpt bij GPU-driver communicatie
+    ipc: host
     environment:
       # GPU acceleratie instellingen
       - ONEAPI_DEVICE_SELECTOR=level_zero:gpu
@@ -22,6 +24,7 @@ services:
       - WHISPER_HTTP_PORT=8910
     devices:
       # De exacte render node op basis van mijn 'ls' output
+      - /dev/dri:/dev/dri:rwm
       - /dev/dri/renderD128:/dev/dri/renderD128:rwm
       - /dev/dri/card1:/dev/dri/card1:rwm
     group_add:
