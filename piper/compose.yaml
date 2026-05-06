@@ -7,7 +7,7 @@ services:
       - 8.8.8.8
     command: 
       - "--voice"
-      - "nl_NL-alex-medium"
+      - "alex"
       - "--data-dir"
       - "/data"
       - "--download-dir"
