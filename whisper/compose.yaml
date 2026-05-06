@@ -18,13 +18,12 @@ services:
       # Netwerk configuratie
       - WYOMING_URI=tcp://0.0.0.0:10300
       # Deze zijn intern voor de container, maar vaak nodig voor de interne bridge
-      - WHISPER_HTTP_HOST=127.0.0.1
+      - WHISPER_HTTP_HOST=0.0.0.0
       - WHISPER_HTTP_PORT=8910
     devices:
-      # We houden /dev/dri aan voor algemene toegang, 
-      # maar voegen de specifieke render node toe zoals in jouw voorbeeld
-      - /dev/dri:/dev/dri
-      - /dev/dri/renderD128:/dev/dri/renderD128:rwm 
+      # De exacte render node op basis van mijn 'ls' output
+      - /dev/dri/renderD128:/dev/dri/renderD128:rwm
+      - /dev/dri/card1:/dev/dri/card1:rwm
     group_add:
       - "992" 
     dns:
