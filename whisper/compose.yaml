@@ -21,7 +21,6 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/whisper:/data
     command: [
-      "python3", "-m", "wyoming_whisper",
       "--model", "large-v3-turbo", 
       "--language", "nl", 
       "--beam-size", "2", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
