@@ -3,6 +3,14 @@ services:
     image: rhasspy/wyoming-whisper:latest
     container_name: wyoming-whisper
     restart: unless-stopped
+    environment:
+      # Gebruik de iGPU voor acceleratie (OpenVINO/oneAPI)
+      - ONEAPI_DEVICE_SELECTOR=level_zero:gpu
+      # Optimaliseer threading voor een i7 (instellen op aantal fysieke cores, meestal 4 of 6)
+      - OMP_NUM_THREADS=4
+    devices:
+      # Geeft de container direct toegang tot de Intel GPU hardware
+        - /dev/dri:/dev/dri
     dns:
       - 1.1.1.1 # force cloudflare DNS
       - 8.8.8.8 # force google DNS
@@ -11,8 +19,8 @@ services:
     volumes:
       - ${CONFIG_FOLDER}:/data
     command: [
-      "--model", "small-int8", 
+      "--model", "turbo-int8", 
       "--language", "nl", 
-      "--beam-size", "4", # pakt 2 mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
-      "--data-dir", "/data"
+      "--beam-size", "2", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
+      "--data-dir", "/data",
     ]
