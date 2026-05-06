@@ -16,5 +16,5 @@ services:
       "--beam-size", "3", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
       "--cpu-threads", "3", 
       "--data-dir", "/data",
-      "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht."
+      "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht. Woonkamer. Slaapkamer. Zolder. Overloop. Gang. Wasruimte. Waskamer. Werkkamer. Grote kamer. Berging. Espresso machine."
     ]
