@@ -1,6 +1,6 @@
 services:
   wyoming-whisper:
-    image: rhasspy/wyoming-whisper:latest
+    image: ghcr.io/sjtrny/wyoming-whisper-intel:release
     container_name: wyoming-whisper
     restart: unless-stopped
     environment:
@@ -17,9 +17,9 @@ services:
     ports:
       - "10300:10300"
     volumes:
-      - ${CONFIG_FOLDER}:/data
+      - ${CONFIG_FOLDER}/whisper:/data
     command: [
-      "--model", "turbo-int8", 
+      "--model", "large-v3-turbo", 
       "--language", "nl", 
       "--beam-size", "2", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
       "--data-dir", "/data",
