@@ -1,41 +1,19 @@
 services:
   wyoming-whisper:
-    image: ghcr.io/sjtrny/wyoming-whisper-intel:release
+    image: rhasspy/wyoming-whisper:latest
     container_name: wyoming-whisper
     restart: unless-stopped
-    # IPC host helpt bij GPU-driver communicatie
-    ipc: host
-    environment:
-      # GPU acceleratie instellingen
-      - ONEAPI_DEVICE_SELECTOR=level_zero:gpu
-      - ZE_ENABLE_PCI_ID_DEVICE_ORDER=1
-      - OMP_NUM_THREADS=4
-      
-      # Whisper configuratie (nu via env vars)
-      - WHISPER_MODEL=large-v3-turbo
-      - WHISPER_LANG=nl
-      - WHISPER_BEAM_SIZE=2
-      - WHISPER_DATA_DIR=/data
-      
-      # Netwerk configuratie
-      - WYOMING_URI=tcp://0.0.0.0:10300
-      # Deze zijn intern voor de container, maar vaak nodig voor de interne bridge
-      - WHISPER_HTTP_HOST=0.0.0.0
-      - WHISPER_HTTP_PORT=8910
-    devices:
-      # De exacte render node op basis van mijn 'ls' output
-      - /dev/dri:/dev/dri:rwm
-      - /dev/dri/renderD128:/dev/dri/renderD128:rwm
-      - /dev/dri/card1:/dev/dri/card1:rwm
-    group_add:
-      - "992" 
     dns:
-      - 1.1.1.1
-      - 8.8.8.8
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
     ports:
       - "10300:10300"
     volumes:
-      - ${CONFIG_FOLDER}/whisper:/data
-
-    # We verwijderen de 'command' sectie volledig omdat de 
-    # instellingen nu via 'environment' worden doorgegeven.
+      - ${CONFIG_FOLDER}:/data
+    command: [
+      "--model", "large-v3-turbo", 
+      "--language", "nl",
+      "--compute-type", "int8",
+      "--beam-size", "3", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
+      "--data-dir", "/data"
+    ]
