@@ -1,6 +1,6 @@
 services:
   wyoming-onnx-asr:
-    image: ghcr.io/chiabre/wyoming-onnx-asr:latest
+    image: ghcr.io/tboby/wyoming-onnx-asr:latest
     container_name: wyoming-onnx-asr
     restart: unless-stopped
     dns:
