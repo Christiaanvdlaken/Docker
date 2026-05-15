@@ -7,12 +7,15 @@ services:
       - 1.1.1.1
       - 8.8.8.8
     ports:
-      - "10301:10300"  # Poort 10301 om conflict met je whisper container te voorkomen
+      - "10301:10300"  # Poort 10301 zodat hij netjes naast je Whisper container kan draaien
     volumes:
-      - ${CONFIG_FOLDER}/onnx-asr:/data
-    command: [
-      "--uri", "tcp://0.0.0.0:10300",
-      "--model-multilingual", "nemo-parakeet-tdt-0.6b-v3", # Uitstekend voor Nederlands, razendsnel op CPU
-      "--model-dir", "/data",  # Zorgt dat de modellen netjes in je volume worden opgeslagen
-      "--threads", "6"         # Gebruik 6 CPU threads (vervanger van --cpu-threads)
-    ]
+      - ${CONFIG_FOLDER}/nemo:/data
+    command:
+      - --uri
+      - "tcp://0.0.0.0:10300"
+      - --model-multilingual
+      - "nemo-parakeet-tdt-0.6b-v3"
+      - --model-dir
+      - "/data"
+      - --device
+      - "cpu"          # Dwingt CPU-berekening af, net als je Whisper setup
