@@ -36,7 +36,7 @@ services:
       "--language", "nl",              # Nederlands
       #"--beam-size", "7",              # Hogere nauwkeurigheid
       "--cpu-threads", "6",            # Gebruik 6 threads (laat 2 vrij voor andere containers)
-      "--stt_library", "",
+      "--stt_library", "faster-whisper",
       "--data-dir", "/data",
       "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht. Woonkamer. Slaapkamer. Zolder. Overloop. Gang. Wasruimte. Waskamer. Werkkamer. Grote kamer. Berging. Espresso machine. Hervat. Zet het licht aan. Zet het licht uit. Doe de deur open. Doe de deur dicht. Speel muziek. Stop de muziek. Hoe laat is het? Wat is de temperatuur? Start de wasmachine. Stop de wasmachine. Schakel de verwarming in. Zet de verwarming uit.",
       "--vad-filter",                 # Ingebouwde VAD (Voice Activity Detection) voor ruisonderdrukking
