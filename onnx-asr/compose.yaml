@@ -1,20 +1,18 @@
 services:
-  wyoming-onnx-asr:
+  wyoming-stt-nemo:
     image: ghcr.io/tboby/wyoming-onnx-asr:latest
-    container_name: wyoming-onnx-asr
+    container_name: wyoming-stt-nemo
     restart: unless-stopped
     dns:
       - 1.1.1.1
       - 8.8.8.8
     ports:
-      - "10301:10300"  # Poort 10301 om naast whisper te kunnen draaien
+      - "10301:10300"  # Poort 10301 om conflict met je whisper container te voorkomen
     volumes:
       - ${CONFIG_FOLDER}/onnx-asr:/data
     command: [
       "--uri", "tcp://0.0.0.0:10300",
-      "--model", "parakeet-v3",       # Default model, zeer accuraat
-      "--model-dir", "/data",         # Slaat de modellen op in je gekoppelde volume
-      "--threads", "6",               # Vervangt --cpu-threads (gebruikt 6 threads voor ONNX)
-      "--cpu",                        # Dwingt CPU-berekening af (als je geen Nvidia GPU docker setup hebt)
-      "--endpoint-ms", "1000"         # Vervangt VAD min-silence: stopt na 1000ms stilte
+      "--model-multilingual", "nemo-parakeet-tdt-0.6b-v3", # Uitstekend voor Nederlands, razendsnel op CPU
+      "--model-dir", "/data",  # Zorgt dat de modellen netjes in je volume worden opgeslagen
+      "--threads", "6"         # Gebruik 6 CPU threads (vervanger van --cpu-threads)
     ]
