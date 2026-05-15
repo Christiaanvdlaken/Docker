@@ -7,21 +7,14 @@ services:
       - 1.1.1.1
       - 8.8.8.8
     ports:
-      - "10300:10300"  # Standaard poort voor Wyoming ASR
+      - "10301:10300"  # Poort 10301 om naast whisper te kunnen draaien
     volumes:
-      - ${CONFIG_FOLDER}/onnx-asr:/data  # Map voor modellen en configuratie
-    environment:
-      - ASR_MODEL=parakeet-0.5B-nl  # Nederlands model (klein en snel)
-      # Alternatieven:
-      # - ASR_MODEL=parakeet-1.1B-nl  # Groter model, nauwkeuriger maar langzamer
-      # - ASR_MODEL=whisper-tiny-nl   # Whisper tiny in ONNX-formaat
+      - ${CONFIG_FOLDER}/onnx-asr:/data
     command: [
-      "--uri", "tcp://0.0.0.0:10300",  # Verplicht voor Wyoming
-      "--language", "nl",              # Nederlands
-      "--device", "cpu",              # Gebruik CPU (geen GPU beschikbaar)
-      "--compute-type", "int8",       # Gebruik 8-bit kwantisering voor snelheid
-      "--audio-chunk", "10",           # Verwerk audio in chunks van 10 seconden (voor real-time)
-      "--vad-threshold", "0.5",       # Drempel voor spraakdetectie
-      "--vad-min-speech-ms", "500",   # Minimale spraakduur (ms)
-      "--vad-min-silence-ms", "1000"  # Minimale stilte om spraak te beëindigen
+      "--uri", "tcp://0.0.0.0:10300",
+      "--model", "parakeet-v3",       # Default model, zeer accuraat
+      "--model-dir", "/data",         # Slaat de modellen op in je gekoppelde volume
+      "--threads", "6",               # Vervangt --cpu-threads (gebruikt 6 threads voor ONNX)
+      "--cpu",                        # Dwingt CPU-berekening af (als je geen Nvidia GPU docker setup hebt)
+      "--endpoint-ms", "1000"         # Vervangt VAD min-silence: stopt na 1000ms stilte
     ]
