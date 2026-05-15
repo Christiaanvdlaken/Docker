@@ -1,0 +1,27 @@
+services:
+  wyoming-onnx-asr:
+    image: ghcr.io/chiabre/wyoming-onnx-asr:latest
+    container_name: wyoming-onnx-asr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - "10300:10300"  # Standaard poort voor Wyoming ASR
+    volumes:
+      - ${CONFIG_FOLDER}/onnx-asr:/data  # Map voor modellen en configuratie
+    environment:
+      - ASR_MODEL=parakeet-0.5B-nl  # Nederlands model (klein en snel)
+      # Alternatieven:
+      # - ASR_MODEL=parakeet-1.1B-nl  # Groter model, nauwkeuriger maar langzamer
+      # - ASR_MODEL=whisper-tiny-nl   # Whisper tiny in ONNX-formaat
+    command: [
+      "--uri", "tcp://0.0.0.0:10300",  # Verplicht voor Wyoming
+      "--language", "nl",              # Nederlands
+      "--device", "cpu",              # Gebruik CPU (geen GPU beschikbaar)
+      "--compute-type", "int8",       # Gebruik 8-bit kwantisering voor snelheid
+      "--audio-chunk", "10",           # Verwerk audio in chunks van 10 seconden (voor real-time)
+      "--vad-threshold", "0.5",       # Drempel voor spraakdetectie
+      "--vad-min-speech-ms", "500",   # Minimale spraakduur (ms)
+      "--vad-min-silence-ms", "1000"  # Minimale stilte om spraak te beëindigen
+    ]
