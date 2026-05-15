@@ -31,18 +31,20 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/whisper:/data
     command: [
-      "--model", "medium-int8",          # Betere nauwkeurigheid dan small-int8, nog steeds efficiënt
-      "--language", "nl",                # Nederlands
-      "--beam-size", "5",                # Hogere nauwkeurigheid, nog steeds redelijk snel
-      "--best-of", "2",                  # Extra nauwkeurigheid met minimale snelheidsinlevering
-      "--patience", "0.9",               # Lichte optimalisatie voor snelheid
-      "--cpu-threads", "6",              # Gebruik 6 threads (laat 2 vrij voor andere containers)
+      "--uri", "tcp://0.0.0.0:10300",  # Verplicht voor Wyoming
+      "--model", "medium-int8",        # Betere nauwkeurigheid voor Nederlands
+      "--language", "nl",              # Nederlands
+      "--beam-size", "5",              # Hogere nauwkeurigheid
+      "--cpu-threads", "6",            # Gebruik 6 threads (laat 2 vrij voor andere containers)
       "--data-dir", "/data",
-      "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht. Woonkamer. Slaapkamer. Zolder. Overloop. Gang. Wasruimte. Waskamer. Werkkamer. Grote kamer. Berging. Espresso machine. Hervat. Zet het licht aan. Zet het licht uit. Doe de deur open. Doe de deur dicht. Speel muziek. Stop de muziek. Hoe laat is het? Wat is de temperatuur? Start de wasmachine. Stop de wasmachine. Schakel de verwarming in. Zet de verwarming uit."
+      "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht. Woonkamer. Slaapkamer. Zolder. Overloop. Gang. Wasruimte. Waskamer. Werkkamer. Grote kamer. Berging. Espresso machine. Hervat. Zet het licht aan. Zet het licht uit. Doe de deur open. Doe de deur dicht. Speel muziek. Stop de muziek. Hoe laat is het? Wat is de temperatuur? Start de wasmachine. Stop de wasmachine. Schakel de verwarming in. Zet de verwarming uit.",
+      "--vad-filter",                 # Ingebouwde VAD (Voice Activity Detection) voor ruisonderdrukking
+      "--vad-threshold", "0.5",       # Drempel voor spraakdetectie (0.1-1.0, hoe hoger hoe strenger)
+      "--vad-min-speech-ms", "500",   # Minimale duur van spraak (ms) om als geldig te worden beschouwd
+      "--vad-min-silence-ms", "1000" # Minimale duur van stilte (ms) om spraak te beëindigen
     ]
-    # Limiteer CPU en geheugen om andere containers niet te verstoren
     deploy:
       resources:
         limits:
-          cpus: "1.5"   # Max 1.5 CPU-kernen (van de 4 beschikbare)
+          cpus: "1.5"   # Max 1.5 CPU-kernen
           memory: 2G    # Max 2GB RAM
