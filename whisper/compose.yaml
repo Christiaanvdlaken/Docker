@@ -1,20 +1,48 @@
+# services:
+#   wyoming-whisper:
+#     image: rhasspy/wyoming-whisper:latest
+#     container_name: wyoming-whisper
+#     restart: unless-stopped
+#     dns:
+#       - 1.1.1.1 # force cloudflare DNS
+#       - 8.8.8.8 # force google DNS
+#     ports:
+#       - "10300:10300"
+#     volumes:
+#       - ${CONFIG_FOLDER}/whisper:/data
+#     command: [
+#       "--model", "small-int8", 
+#       "--language", "nl",
+#       "--beam-size", "3", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
+#       "--cpu-threads", "3", 
+#       "--data-dir", "/data",
+#       "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht. Woonkamer. Slaapkamer. Zolder. Overloop. Gang. Wasruimte. Waskamer. Werkkamer. Grote kamer. Berging. Espresso machine. Hervat. "
+#     ]
 services:
   wyoming-whisper:
     image: rhasspy/wyoming-whisper:latest
     container_name: wyoming-whisper
     restart: unless-stopped
     dns:
-      - 1.1.1.1 # force cloudflare DNS
-      - 8.8.8.8 # force google DNS
+      - 1.1.1.1
+      - 8.8.8.8
     ports:
       - "10300:10300"
     volumes:
       - ${CONFIG_FOLDER}/whisper:/data
     command: [
-      "--model", "small-int8", 
-      "--language", "nl",
-      "--beam-size", "3", # pakt {beam-size} mogelijkheden, en kiest de meestwaarschijlijke. Hoe hoger hoe beter, maar ook trager.
-      "--cpu-threads", "3", 
+      "--model", "medium-int8",          # Betere nauwkeurigheid dan small-int8, nog steeds efficiënt
+      "--language", "nl",                # Nederlands
+      "--beam-size", "5",                # Hogere nauwkeurigheid, nog steeds redelijk snel
+      "--best-of", "2",                  # Extra nauwkeurigheid met minimale snelheidsinlevering
+      "--patience", "0.9",               # Lichte optimalisatie voor snelheid
+      "--cpu-threads", "6",              # Gebruik 6 threads (laat 2 vrij voor andere containers)
       "--data-dir", "/data",
-      "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht. Woonkamer. Slaapkamer. Zolder. Overloop. Gang. Wasruimte. Waskamer. Werkkamer. Grote kamer. Berging. Espresso machine."
+      "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht. Woonkamer. Slaapkamer. Zolder. Overloop. Gang. Wasruimte. Waskamer. Werkkamer. Grote kamer. Berging. Espresso machine. Hervat. Zet het licht aan. Zet het licht uit. Doe de deur open. Doe de deur dicht. Speel muziek. Stop de muziek. Hoe laat is het? Wat is de temperatuur? Start de wasmachine. Stop de wasmachine. Schakel de verwarming in. Zet de verwarming uit."
     ]
+    # Limiteer CPU en geheugen om andere containers niet te verstoren
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"   # Max 1.5 CPU-kernen (van de 4 beschikbare)
+          memory: 2G    # Max 2GB RAM
