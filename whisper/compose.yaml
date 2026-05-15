@@ -32,10 +32,11 @@ services:
       - ${CONFIG_FOLDER}/whisper:/data
     command: [
       "--uri", "tcp://0.0.0.0:10300",  # Verplicht voor Wyoming
-      "--model", "medium-int8",        # Betere nauwkeurigheid voor Nederlands
+      "--model", "small-int8",        # Betere nauwkeurigheid voor Nederlands
       "--language", "nl",              # Nederlands
-      "--beam-size", "5",              # Hogere nauwkeurigheid
+      #"--beam-size", "7",              # Hogere nauwkeurigheid
       "--cpu-threads", "6",            # Gebruik 6 threads (laat 2 vrij voor andere containers)
+      "--stt_library", "",
       "--data-dir", "/data",
       "--initial-prompt", "Weltrusten. Slaap lekker. Slaap zacht. Woonkamer. Slaapkamer. Zolder. Overloop. Gang. Wasruimte. Waskamer. Werkkamer. Grote kamer. Berging. Espresso machine. Hervat. Zet het licht aan. Zet het licht uit. Doe de deur open. Doe de deur dicht. Speel muziek. Stop de muziek. Hoe laat is het? Wat is de temperatuur? Start de wasmachine. Stop de wasmachine. Schakel de verwarming in. Zet de verwarming uit.",
       "--vad-filter",                 # Ingebouwde VAD (Voice Activity Detection) voor ruisonderdrukking
@@ -43,8 +44,3 @@ services:
       "--vad-min-speech-ms", "500",   # Minimale duur van spraak (ms) om als geldig te worden beschouwd
       "--vad-min-silence-ms", "1000" # Minimale duur van stilte (ms) om spraak te beëindigen
     ]
-    deploy:
-      resources:
-        limits:
-          cpus: "1.5"   # Max 1.5 CPU-kernen
-          memory: 2G    # Max 2GB RAM
