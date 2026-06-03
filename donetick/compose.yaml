@@ -9,7 +9,8 @@ services:
       - ${CONFIG_FOLDER}/donetick/data:/donetick-data
       - ${CONFIG_FOLDER}/donetick/config:/config
     environment:
-      - DT_ENV=selfhosted
+      - DT_ENV=selfhosted      
+      - DT_DB_TYPE=sqlite      
       - DT_SQLITE_PATH=/donetick-data/donetick.db
       - TZ=${TZ}
       - DT_JWT_SECRET=${DT_JWT_SECRET_DONETICK}
