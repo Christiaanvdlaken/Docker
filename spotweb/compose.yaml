@@ -3,6 +3,9 @@ services:
     image: erikdevries/spotweb
     container_name: spotweb_app
     restart: unless-stopped
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS    
     environment:
       - TZ=${TZ}
       - CRON_INTERVAL=*/5 * * * *

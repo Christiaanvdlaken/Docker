@@ -7,7 +7,10 @@ services:
   core:
     container_name: searxng-core
     image: docker.io/searxng/searxng:${SEARXNG_VERSION:-latest}
-    restart: always
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS    
     ports:
       - ${SEARXNG_HOST:+${SEARXNG_HOST}:}${SEARXNG_PORT:-8080}:${SEARXNG_PORT:-8080}
     volumes:
@@ -18,7 +21,7 @@ services:
     container_name: searxng-valkey
     image: docker.io/valkey/valkey:9-alpine
     command: valkey-server --save 30 1 --loglevel warning
-    restart: always
+    restart: unless-stopped
     volumes:
       - ${CONFIG_FOLDER}/searxng-valkey:/data/
 

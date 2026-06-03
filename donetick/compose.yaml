@@ -3,6 +3,9 @@ services:
     image: donetick/donetick
     container_name: donetick
     restart: unless-stopped
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS    
     ports:
       - ${DONETICK_PORT}:2021
     volumes:
