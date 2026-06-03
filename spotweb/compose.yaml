@@ -4,12 +4,17 @@ services:
     environment:
       - TZ=${TZ}
       - CRON_INTERVAL=*/5 * * * *
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=spotweb
+      - DB_USER=${MYSQL_USER_SPOTWEB}
+      - DB_PASSWORD=${MYSQL_PASSWORD_SPOTWEB}
     ports:
       - ${SPOTWEB_PORT}:80
     depends_on:
       - mysql
     volumes:
-      - ${CONFIG_FOLDER}/spotweb/app:/var/lib/mysql
+      - ${CONFIG_FOLDER}/spotweb/app:/app
 
   mysql:
     image: mysql
