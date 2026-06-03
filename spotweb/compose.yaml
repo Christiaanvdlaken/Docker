@@ -1,6 +1,8 @@
 services:
   spotweb:
     image: erikdevries/spotweb
+    container_name: spotweb_app
+    restart: unless-stopped
     environment:
       - TZ=${TZ}
       - CRON_INTERVAL=*/5 * * * *
@@ -13,11 +15,11 @@ services:
       - ${SPOTWEB_PORT}:80
     depends_on:
       - mysql
-    volumes:
-      - ${CONFIG_FOLDER}/spotweb/app:/app
 
   mysql:
     image: mysql
+    container_name: spotweb_db
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_SPOTWEB}
       - MYSQL_USER=${MYSQL_USER_SPOTWEB}
