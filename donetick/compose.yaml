@@ -4,32 +4,21 @@ services:
     container_name: donetick
     restart: unless-stopped
     dns:
-      - 1.1.1.1
-      - 8.8.8.8    
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS    
     ports:
-      - "${DONETICK_PORT}:2021"
+      - ${DONETICK_PORT}:2021
     volumes:
       - ${CONFIG_FOLDER}/donetick/data:/donetick-data
       - ${CONFIG_FOLDER}/donetick/config:/config
     environment:
-      - TZ=${TZ}
       - DT_ENV=selfhosted
-      
-      # Database configuratie (Zorg dat deze exact zo staat)
-      - DT_DB_TYPE=sqlite
       - DT_SQLITE_PATH=/donetick-data/donetick.db
-      - DT_JWT_SECRET=${DT_JWT_SECRET_DONETICK}
-
-      # Dit ontbreekt: De app heeft een URL nodig om endpoints te valideren
-      - DT_APP_URL=http://localhost:${DONETICK_PORT}
-
-      # Voorkom dat de Telegram/Discord bots crashen als je ze niet gebruikt.
-      # Als je ze wel gebruikt, vul dan hier je tokens in.
-      - DT_TELEGRAM_TOKEN=
-      - DT_DISCORD_TOKEN=
+      - TZ=${TZ}
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:2021/api/v1/health || exit 1
       start_period: 1m
       timeout: 5s
       interval: 1m
       retries: 3
+      
