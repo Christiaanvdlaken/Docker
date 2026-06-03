@@ -1,39 +1,22 @@
 services:
   spotweb:
     image: erikdevries/spotweb
-    container_name: spotweb
     environment:
       - TZ=${TZ}
-      - DB_HOST=spotweb_db
-      - DB_NAME=spotweb
-      - DB_USER=${MYSQL_USER_SPOTWEB}
-      - DB_PASS=${MYSQL_PASSWORD_SPOTWEB}
       - CRON_INTERVAL=*/5 * * * *
-    volumes:
-      - ${CONFIG_FOLDER}/spotweb:/config
     ports:
-      - 8085:80/tcp
-    network_mode: synobridge
+      - ${SPOTWEB_PORT}:80
     depends_on:
-      - spotweb_db
-    security_opt:
-      - no-new-privileges:true
-    restart: always
+      - mysql
+    volumes:
+      - ${CONFIG_FOLDER}/spotweb/app:/var/lib/mysql
 
-  spotweb_db:
-    image: linuxserver/mariadb:latest
-    container_name: spotweb_db
+  mysql:
+    image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_SPOTWEB}
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - MYSQL_DATABASE=spotweb
       - MYSQL_USER=${MYSQL_USER_SPOTWEB}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD_SPOTWEB}
+      - MYSQL_DATABASE=spotweb
     volumes:
-      - ${CONFIG_FOLDER}/spotweb-mariadb:/config
-    network_mode: synobridge
-    security_opt:
-      - no-new-privileges:true
-    restart: always
+      - ${CONFIG_FOLDER}/spotweb/db:/var/lib/mysql
