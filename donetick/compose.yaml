@@ -7,13 +7,13 @@ services:
       - 1.1.1.1 # force cloudflare DNS
       - 8.8.8.8 # force google DNS    
     ports:
-      - ${DONETICK_PORT}:2021
+      - "${DONETICK_PORT}:2021"
     volumes:
       - ${CONFIG_FOLDER}/donetick/data:/donetick-data
       - ${CONFIG_FOLDER}/donetick/config:/config
     environment:
-      - DT_ENV=selfhosted      
-      - DT_DB_TYPE=sqlite      
+      - DT_ENV=selfhosted
+      - DT_DB_TYPE=sqlite
       - DT_SQLITE_PATH=/donetick-data/donetick.db
       - TZ=${TZ}
       - DT_JWT_SECRET=${DT_JWT_SECRET_DONETICK}
