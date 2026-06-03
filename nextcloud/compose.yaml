@@ -33,7 +33,7 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/nextcloud/app:/var/www/html
     environment:
-      - MARIADB_PASSWORD=${MYSQL_PASSWORD_NEXTCLOUD}
-      - MARIADB_DATABASE=nextcloud
-      - MARIADB_USER=nextcloud
-      - MARIADB_HOST=db
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD_NEXTCLOUD}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=db
