@@ -10,10 +10,10 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/nextcloud/db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD_NEXTCLOUD=${MYSQL_ROOT_PASSWORD_NEXTCLOUD}
-      - MYSQL_PASSWORD_NEXTCLOUD=${MYSQL_PASSWORD_NEXTCLOUD}
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
+      - MARIADB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_NEXTCLOUD}
+      - MARIADB_PASSWORD=${MYSQL_PASSWORD_NEXTCLOUD}
+      - MARIADB_DATABASE=nextcloud
+      - MARIADB_USER=nextcloud
 
   # Note: Redis is an external service. You can find more information about the configuration here:
   # https://hub.docker.com/_/redis
@@ -29,11 +29,11 @@ services:
       - ${NEXTCLOUD_PORT}:80
     depends_on:
       - redis
-      - db
+      - nextcloud-db
     volumes:
       - ${CONFIG_FOLDER}/nextcloud/app:/var/www/html
     environment:
-      - MYSQL_PASSWORD_NEXTCLOUD=${MYSQL_PASSWORD_NEXTCLOUD}
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_HOST=db
+      - MARIADB_PASSWORD=${MYSQL_PASSWORD_NEXTCLOUD}
+      - MARIADB_DATABASE=nextcloud
+      - MARIADB_USER=nextcloud
+      - MARIADB_HOST=db
