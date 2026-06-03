@@ -4,13 +4,14 @@ services:
   db:
     # Note: Check the recommend version here: https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html#server
     image: mariadb:lts
+    container_name: nextcloud-db
     restart: always
     command: --transaction-isolation=READ-COMMITTED
     volumes:
       - ${CONFIG_FOLDER}/nextcloud/db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_PASSWORD=
+      - MYSQL_ROOT_PASSWORD_NEXTCLOUD=${MYSQL_ROOT_PASSWORD_NEXTCLOUD}
+      - MYSQL_PASSWORD_NEXTCLOUD=${MYSQL_PASSWORD_NEXTCLOUD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
 
@@ -22,6 +23,7 @@ services:
 
   app:
     image: nextcloud
+    container_name: nextcloud-app
     restart: always
     ports:
       - 8080:80
@@ -31,7 +33,7 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/nextcloud/app:/var/www/html
     environment:
-      - MYSQL_PASSWORD=
+      - MYSQL_PASSWORD_NEXTCLOUD=${MYSQL_PASSWORD_NEXTCLOUD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=db
