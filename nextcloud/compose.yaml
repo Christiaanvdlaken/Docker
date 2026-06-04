@@ -31,7 +31,7 @@ services:
       - redis
       - db
     volumes:
-      - ${NAS_FOLDER}/nextcloud/app:/var/www/html
+      - ${CONFIG_FOLDER}/nextcloud/app:/var/www/html
     environment:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD_NEXTCLOUD}
       - MYSQL_DATABASE=nextcloud
