@@ -38,3 +38,18 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=db
       - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_TRUSTED_DOMAINS}
+
+  # Collabora Online (Nextcloud Office) - lightweight example service
+  # Set COLLAB_DOMAIN to a regex matching your Nextcloud host(s) (see docs).
+  collabora:
+    image: collabora/code:latest
+    container_name: nextcloud-collabora
+    restart: always
+    ports:
+      - "${NX_COLLAB_PORT}:9980"
+    environment:
+      - domain=${COLLAB_DOMAIN}
+    cap_add:
+      - MKNOD
+    depends_on:
+      - app
