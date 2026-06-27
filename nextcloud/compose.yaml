@@ -4,6 +4,9 @@ services:
     init: true
     container_name: nextcloud-aio-mastercontainer
     restart: always
+    dns:
+      - 1.1.1.1 # Cloudflare DNS
+      - 8.8.8.8 # Google DNS
     ports:
       - "8438:8080"
     environment:
