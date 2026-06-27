@@ -1,55 +1,43 @@
 services:
-  # Note: MariaDB is external service. You can find more information about the configuration here:
-  # https://hub.docker.com/_/mariadb
-  db:
-    # Note: Check the recommend version here: https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html#server
-    image: mariadb:lts
-    container_name: nextcloud-db
-    restart: always
-    command: --transaction-isolation=READ-COMMITTED
-    volumes:
-      - ${CONFIG_FOLDER}/nextcloud/db:/var/lib/mysql
-    environment:
-      - MARIADB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_NEXTCLOUD}
-      - MARIADB_PASSWORD=${MYSQL_PASSWORD_NEXTCLOUD}
-      - MARIADB_DATABASE=nextcloud
-      - MARIADB_USER=nextcloud
-
-  # Note: Redis is an external service. You can find more information about the configuration here:
-  # https://hub.docker.com/_/redis
-  redis:
-    image: redis:alpine
-    restart: always
-
-  app:
-    image: nextcloud
-    container_name: nextcloud-app
+  nextcloud-aio-mastercontainer:
+    image: nextcloud/all-in-one:latest
+    init: true
+    container_name: nextcloud-aio-mastercontainer
     restart: always
     ports:
-      - ${NEXTCLOUD_PORT}:80
-    depends_on:
-      - redis
-      - db
+      - "8438:8080"
+    environment:
+      - APACHE_PORT=11000
+      # Gebruikersdata (foto's, documenten, etc.)
+      - NEXTCLOUD_DATADIR=${NAS_FOLDER}/nextcloud/data
     volumes:
-      - ${CONFIG_FOLDER}/nextcloud/app:/var/www/html
-    environment:
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD_NEXTCLOUD}
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_HOST=db
-      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_TRUSTED_DOMAINS}
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
-  # Collabora Online (Nextcloud Office) - lightweight example service
-  # Set COLLAB_DOMAIN to a regex matching your Nextcloud host(s) (see docs).
-  collabora:
-    image: collabora/code:latest
-    container_name: nextcloud-collabora
-    restart: always
-    ports:
-      - "${NX_COLLAB_PORT}:9980"
-    environment:
-      - domain=${COLLAB_DOMAIN}
-    cap_add:
-      - MKNOD
-    depends_on:
-      - app
+volumes:
+  # Dit is het volume van de mastercontainer zelf
+  nextcloud_aio_mastercontainer:
+    name: nextcloud_aio_mastercontainer
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${CONFIG_FOLDER}/nextcloud/aio-config
+
+  # AIO maakt deze volumes automatisch aan, maar door ze hier te definiëren
+  # dwingen we Docker om ze naar jouw specifieke mappen te schrijven:
+  nextcloud_aio_nextcloud:
+    name: nextcloud_aio_nextcloud
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${CONFIG_FOLDER}/nextcloud/app-code
+
+  nextcloud_aio_database:
+    name: nextcloud_aio_database
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${CONFIG_FOLDER}/nextcloud/database
