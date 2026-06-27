@@ -8,36 +8,13 @@ services:
       - "8438:8080"
     environment:
       - APACHE_PORT=11000
-      # Gebruikersdata (foto's, documenten, etc.)
+      # Waar de gebruikersdata van nextcloud opgeslagen wordt
       - NEXTCLOUD_DATADIR=${NAS_FOLDER}/nextcloud/data
     volumes:
+      # De configuratie van de mastercontainer zelf
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
 volumes:
-  # Dit is het volume van de mastercontainer zelf
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${CONFIG_FOLDER}/nextcloud/aio-config
-
-  # AIO maakt deze volumes automatisch aan, maar door ze hier te definiëren
-  # dwingen we Docker om ze naar jouw specifieke mappen te schrijven:
-  nextcloud_aio_nextcloud:
-    name: nextcloud_aio_nextcloud
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${CONFIG_FOLDER}/nextcloud/app-code
-
-  nextcloud_aio_database:
-    name: nextcloud_aio_database
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${CONFIG_FOLDER}/nextcloud/database
