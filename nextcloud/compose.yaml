@@ -14,6 +14,8 @@ services:
       # Waar de gebruikersdata van nextcloud opgeslagen wordt
       - NEXTCLOUD_DATADIR=${NAS_FOLDER}/nextcloud/data
       - SKIP_DOMAIN_VALIDATION=true # anders kan ik het niet bereiken via mijn lokale domein
+      - AIO_DNS_SUFFIX=1.1.1.1
+      - AIO_DISABLE_DNS_CHECK=true
     volumes:
       # De configuratie van de mastercontainer zelf
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
