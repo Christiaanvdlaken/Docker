@@ -16,6 +16,7 @@ services:
       - SKIP_DOMAIN_VALIDATION=true # anders kan ik het niet bereiken via mijn lokale domein
       - AIO_DNS_SUFFIX=1.1.1.1
       - AIO_DISABLE_DNS_CHECK=true
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.tscvdl.duckdns.org 192.168.1.74 172.16.0.0/12
     volumes:
       # De configuratie van de mastercontainer zelf
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
