@@ -54,6 +54,3 @@ services:
     environment:
       - JWT_ENABLED=true
       - JWT_SECRET=${EUROOFFICE_JWT_SECRET}
-    volumes:
-      - ${CONFIG_FOLDER}/euro-office/documentserver:/var/lib/euro-office/documentserver
-      - ${CONFIG_FOLDER}/euro-office/logs:/var/log/euro-office/documentserver
