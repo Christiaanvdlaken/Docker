@@ -1,27 +1,60 @@
 services:
-  nextcloud-aio-mastercontainer:
-    image: nextcloud/all-in-one:latest
-    init: true
-    container_name: nextcloud-aio-mastercontainer
+  db:
+    image: mariadb:lts
     restart: always
+    command: --transaction-isolation=READ-COMMITTED
+    container_name: nextcloud-db
     dns:
-      - 1.1.1.1 # Cloudflare DNS
-      - 8.8.8.8 # Google DNS
-    ports:
-      - "8438:8080"
-    environment:
-      - APACHE_PORT=11000
-      # Waar de gebruikersdata van nextcloud opgeslagen wordt
-      - NEXTCLOUD_DATADIR=${NAS_FOLDER}/nextcloud/data
-      - SKIP_DOMAIN_VALIDATION=true # anders kan ik het niet bereiken via mijn lokale domein
-      - AIO_DNS_SUFFIX=1.1.1.1
-      - AIO_DISABLE_DNS_CHECK=true
-      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.tscvdl.duckdns.org 192.168.1.74 172.16.0.0/12
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS    
     volumes:
-      # De configuratie van de mastercontainer zelf
-      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${CONFIG_FOLDER}/nextcloud/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${NEXTCLOUD_DB_PASSWORD}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - TZ=${TZ}
 
-volumes:
-  nextcloud_aio_mastercontainer:
-    name: nextcloud_aio_mastercontainer
+  redis:
+    image: redis:alpine
+    restart: always
+    container_name: nextcloud-redis
+
+  app:
+    image: nextcloud
+    restart: always
+    container_name: nextcloud
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS    
+    ports:
+      - "${NEXTCLOUD_PORT:-8080}:80"
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ${CONFIG_FOLDER}/nextcloud/html:/var/www/html
+    environment:
+      - MYSQL_PASSWORD=${NEXTCLOUD_DB_PASSWORD}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=db
+      - TZ=${TZ}
+
+  euro-office:
+    image: ghcr.io/euro-office/documentserver:latest
+    container_name: euro-office
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1 # force cloudflare DNS
+      - 8.8.8.8 # force google DNS
+    ports:
+      - "${EUROOFFICE_PORT:-80}:80"
+    environment:
+      - JWT_ENABLED=true
+      - JWT_SECRET=${EUROOFFICE_JWT_SECRET}
+    volumes:
+      - ${CONFIG_FOLDER}/euro-office/documentserver:/var/lib/euro-office/documentserver
+      - ${CONFIG_FOLDER}/euro-office/logs:/var/log/euro-office/documentserver
+      - ${CONFIG_FOLDER}/euro-office/config:/etc/euro-office/documentserver
