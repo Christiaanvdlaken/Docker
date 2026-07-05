@@ -6,8 +6,6 @@ services:
     image: ${BOOKORBIT_APP_IMAGE?required}
     restart: unless-stopped
     init: true
-    env_file:
-      - .env
     ports:
       - "${BOOKORBIT_PORT:-3000}:${PORT:-3000}"
     environment:
