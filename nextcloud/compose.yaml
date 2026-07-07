@@ -70,4 +70,4 @@ services:
       - ${CONFIG_FOLDER}/onlyoffice/logs:/var/log/onlyoffice
       - ${CONFIG_FOLDER}/onlyoffice/cache:/var/lib/onlyoffice/documentserver/App_Data/cache/files
       - ${CONFIG_FOLDER}/onlyoffice/files:/var/www/onlyoffice/documentserver-example/public/files
-      - /usr/share/fonts:/usr/share/fonts:ro
+      - /usr/share/fonts:/usr/share/fonts
