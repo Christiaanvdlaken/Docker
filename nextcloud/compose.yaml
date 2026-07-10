@@ -65,4 +65,3 @@ services:
     volumes:
       - ${CONFIG_FOLDER}/eurooffice/data:/var/lib/euro-office/documentserver
       - ${CONFIG_FOLDER}/eurooffice/logs:/var/log/euro-office/documentserver
-      - ${CONFIG_FOLDER}/eurooffice/config:/etc/euro-office/documentserver
