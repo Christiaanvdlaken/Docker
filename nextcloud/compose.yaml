@@ -63,5 +63,10 @@ services:
     stdin_open: true
     stop_grace_period: 60s
     volumes:
-      - ${CONFIG_FOLDER}/eurooffice/data:/var/lib/euro-office/documentserver
-      - ${CONFIG_FOLDER}/eurooffice/logs:/var/log/euro-office/documentserver
+      - eurooffice_data:/var/lib/euro-office/documentserver
+      - eurooffice_logs:/var/log/euro-office/documentserver
+
+# VOEG DIT HELEMAAL ONDERAAN JE DOCKER-COMPOSE.YML BESTAND TOE:
+volumes:
+  eurooffice_data:
+  eurooffice_logs:
